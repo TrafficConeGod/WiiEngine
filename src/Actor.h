@@ -7,9 +7,11 @@ class Actor {
     protected:
         World* world;
     public:
-        ushort id;
+        static const uint ID = 0;
 
         explicit Actor(World* world);
+
+        virtual bool IsOfType(ushort id);
 
         virtual void Load(DataStream& stream);
         virtual void Save(DataStream& stream);

@@ -7,13 +7,11 @@ class Sprite : public Actor {
 
         int x;
         int y;
-        int dx;
-        int dy;
         int image;
 
         using Actor::Actor;
 
-        virtual void Create();
-        virtual void Update();
+        virtual bool IsOfType(ushort id);
+
         virtual void Draw();
 };

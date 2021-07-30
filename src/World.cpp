@@ -1,24 +1,26 @@
 #include "World.h"
-#include "actors/MyActor.h"
 #include "actors/Sprite.h"
+#include "actors/BouncingBall.h"
 #include "wii/io.h"
 #include "templates.h"
 
 Actor* World::AllocateActor(ushort id) {
     Actor* actor;
     switch (id) {
-        case MyActor::ID:
-            actor = new MyActor(this);
+        case Actor::ID:
+            actor = new Actor(this);
             break;
         case Sprite::ID:
             actor = new Sprite(this);
+            break;
+        case BouncingBall::ID:
+            actor = new BouncingBall(this);
             break;
         default:
             puts("Invalid actor id");
             exit(0);
             break;
     }
-    actor->id = id;
     actors.Push(actor);
     return actor;
 }
@@ -49,7 +51,7 @@ void World::DoAction(void (*action)(Actor*)) {
 void World::DoActionOn(ushort id, void (*action)(Actor*)) {
     for (size_t i = 0; i < actors.size; i++) {
         auto actor = actors[i];
-        if (actor->id == id) {
+        if (actor->IsOfType(id)) {
             action(actor);
         }
     }

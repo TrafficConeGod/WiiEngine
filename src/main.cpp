@@ -3,6 +3,7 @@
 #include "wii/textures.h"
 #include "World.h"
 #include "actors/Sprite.h"
+#include "actors/BouncingBall.h"
 #include "templates.h"
 
 #define DEFAULT_FIFO_SIZE (256*1024)
@@ -116,7 +117,7 @@ int main(int argc, char** argv){
 
 	World world;
 	for (size_t i = 0; i < 1024; i++) {
-		world.AllocateActor(Sprite::ID);
+		world.AllocateActor(BouncingBall::ID);
 	}
 	world.DoAction(CreateAction);
 

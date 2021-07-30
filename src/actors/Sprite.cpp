@@ -1,32 +1,8 @@
 #include "Sprite.h"
 #include "../wii/io.h"
 
-void Sprite::Create() {
-	Actor::Create();
-    x = rand() % (640 - 32) << 8;
-	y = rand() % (480 - 32) << 8 ;
-	dx = (rand() & 0xFF) + 0x100;
-	dy = (rand() & 0xFF) + 0x100;
-	image = rand() & 3;
-
-	if(rand() & 1)
-		dx = -dx;
-	if(rand() & 1)
-		dy = -dy;
-}
-
-void Sprite::Update() {
-	Actor::Update();
-    x += dx;
-	y += dy;
-
-	if(x < (1 << 8) || x > ((640 - 32) << 8)) {
-		dx = -dx;
-    }
-
-	if(y < (1 << 8) || y > ((480 - 32) << 8)) {
-		dy = -dy;
-    }
+bool Sprite::IsOfType(ushort id) {
+	return Actor::IsOfType(id) || id == Sprite::ID;
 }
 
 float texCoords[] = {
@@ -35,7 +11,6 @@ float texCoords[] = {
 	0.0, 0.5,  0.5, 0.5, 0.5, 1.0, 0.0, 1.0,
 	0.5, 0.5,  1.0, 0.5, 1.0, 1.0, 0.5, 1.0
 };
-
 
 void Sprite::Draw() {
 	const int width = 32;
