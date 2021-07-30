@@ -1,0 +1,21 @@
+{
+    "C_Cpp.default.systemIncludePath": [
+        "/usr/include/", "/usr/lib/gcc/x86_64-linux-gnu/9/include/", "/opt/devkitpro/libogc/include/"
+    ],
+    "C_Cpp.default.includePath": [
+        "src"
+    ],
+    "files.associations": {
+        "*.tst": "objective-c",
+        "*.toast": "objective-c",
+        "*.txt": "python",
+        "*.tt": "cpp",
+        "array": "cpp",
+        "bitset": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "unordered_map": "cpp"
+    }
+}
