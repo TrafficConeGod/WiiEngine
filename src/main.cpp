@@ -27,9 +27,9 @@ void DrawAction(Actor* actor) {
 }
 
 int main(int argc, char** argv){
-	u32	fb; 	// initial framebuffer index
+	u32	frameBuf; 	// initial framebuffer index
 	u32 firstFrame;
-	f32 yscale;
+	f32 yScale;
 	u32 xfbHeight;
 	Mtx44 perspective;
 	Mtx GXmodelView2D;
@@ -41,14 +41,14 @@ int main(int argc, char** argv){
 
 	rMode = VIDEO_GetPreferredMode(NULL);
 
-	fb = 0;
+	frameBuf = 0;
 	firstFrame = 1;
 	// allocate 2 framebuffers for double buffering
 	frameBuffer[0] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rMode));
 	frameBuffer[1] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rMode));
 
 	VIDEO_Configure(rMode);
-	VIDEO_SetNextFramebuffer(frameBuffer[fb]);
+	VIDEO_SetNextFramebuffer(frameBuffer[frameBuf]);
 	VIDEO_SetBlack(FALSE);
 	VIDEO_Flush();
 	VIDEO_WaitVSync();
@@ -56,7 +56,7 @@ int main(int argc, char** argv){
 		VIDEO_WaitVSync();
 	}
 
-	fb ^= 1;
+	frameBuf ^= 1;
 
 	// setup the fifo and then init the flipper
 	gpFifo = memalign(32, DEFAULT_FIFO_SIZE);
@@ -69,8 +69,8 @@ int main(int argc, char** argv){
 
 	// other gx setup
 	GX_SetViewport(0, 0, rMode->fbWidth, rMode->efbHeight, 0, 1);
-	yscale = GX_GetYScaleFactor(rMode->efbHeight, rMode->xfbHeight);
-	xfbHeight = GX_SetDispCopyYScale(yscale);
+	yScale = GX_GetYScaleFactor(rMode->efbHeight, rMode->xfbHeight);
+	xfbHeight = GX_SetDispCopyYScale(yScale);
 	GX_SetScissor(0, 0, rMode->fbWidth, rMode->efbHeight);
 	GX_SetDispCopySrc(0, 0, rMode->fbWidth, rMode->efbHeight);
 	GX_SetDispCopyDst(rMode->fbWidth, xfbHeight);
@@ -85,7 +85,7 @@ int main(int argc, char** argv){
 
 
 	GX_SetCullMode(GX_CULL_NONE);
-	GX_CopyDisp(frameBuffer[fb], GX_TRUE);
+	GX_CopyDisp(frameBuffer[frameBuf], GX_TRUE);
 	GX_SetDispCopyGamma(GX_GM_1_0);
 
 	// setup the vertex descriptor
@@ -148,16 +148,16 @@ int main(int argc, char** argv){
 		GX_SetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 		GX_SetAlphaUpdate(GX_TRUE);
 		GX_SetColorUpdate(GX_TRUE);
-		GX_CopyDisp(frameBuffer[fb], GX_TRUE);
+		GX_CopyDisp(frameBuffer[frameBuf], GX_TRUE);
 
-		VIDEO_SetNextFramebuffer(frameBuffer[fb]);
+		VIDEO_SetNextFramebuffer(frameBuffer[frameBuf]);
 		if (firstFrame) {
 			VIDEO_SetBlack(FALSE);
 			firstFrame = 0;
 		}
 		VIDEO_Flush();
 		VIDEO_WaitVSync();
-		fb ^= 1;		// flip framebuffer
+		frameBuf ^= 1;		// flip framebuffer
 	}
 	return 0;
 }
