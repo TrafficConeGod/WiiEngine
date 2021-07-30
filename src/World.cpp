@@ -4,31 +4,31 @@
 #include "wii/io.h"
 #include "templates.h"
 
-Actor& World::AllocateActor(ushort id) {
-    Actor* actor_ptr;
+Actor* World::AllocateActor(ushort id) {
+    Actor* actor;
     switch (id) {
         case MyActor::ID:
-            actor_ptr = new MyActor(*this);
+            actor = new MyActor(this);
             break;
         case Sprite::ID:
-            actor_ptr = new Sprite(*this);
+            actor = new Sprite(this);
             break;
         default:
             puts("Invalid actor id");
             exit(0);
             break;
     }
-    actor_ptr->id = id;
-    actor_ptrs.Push(actor_ptr);
-    return *actor_ptr;
+    actor->id = id;
+    actors.Push(actor);
+    return actor;
 }
 
-Actor& World::LoadActor(DataStream& stream) {
+Actor* World::LoadActor(DataStream& stream) {
     ushort id = 0;
     // stream >> id;
 
-    Actor& actor = AllocateActor(id);
-    actor.Load(stream);
+    auto actor = AllocateActor(id);
+    actor->Load(stream);
 
     return actor;
 }
@@ -39,17 +39,17 @@ void World::LoadActors(DataStream& stream) {
     // }
 }
 
-void World::DoAction(void (*action)(Actor&)) {
-    for (size_t i = 0; i < actor_ptrs.size; i++) {
-        Actor& actor = *actor_ptrs[i];
+void World::DoAction(void (*action)(Actor*)) {
+    for (size_t i = 0; i < actors.size; i++) {
+        auto actor = actors[i];
         action(actor);
     }
 }
 
-void World::DoActionOn(ushort id, void (*action)(Actor&)) {
-    for (size_t i = 0; i < actor_ptrs.size; i++) {
-        Actor& actor = *actor_ptrs[i];
-        if (actor.id == id) {
+void World::DoActionOn(ushort id, void (*action)(Actor*)) {
+    for (size_t i = 0; i < actors.size; i++) {
+        auto actor = actors[i];
+        if (actor->id == id) {
             action(actor);
         }
     }

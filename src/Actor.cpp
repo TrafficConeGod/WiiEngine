@@ -2,7 +2,7 @@
 #include "wii/mem.h"
 #include "wii/io.h"
 
-Actor::Actor(World& _world) : world{&_world} {}
+Actor::Actor(World* _world) : world{_world} {}
 
 void Actor::Load(DataStream& stream) {
     

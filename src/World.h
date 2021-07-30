@@ -6,13 +6,13 @@ class Actor;
 
 class World {
     private:
-        Array<Actor*> actor_ptrs;
+        Array<Actor*> actors;
     public:
-        Actor& AllocateActor(ushort id);
+        Actor* AllocateActor(ushort id);
 
-        Actor& LoadActor(DataStream& stream);
+        Actor* LoadActor(DataStream& stream);
         void LoadActors(DataStream& stream);
 
-        void DoAction(void (*action)(Actor&));
-        void DoActionOn(ushort id, void (*action)(Actor&));
+        void DoAction(void (*action)(Actor*));
+        void DoActionOn(ushort id, void (*action)(Actor*));
 };

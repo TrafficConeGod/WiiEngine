@@ -12,13 +12,13 @@ static GXRModeObj *rmode;
 
 GXTexObj texObj;
 
-void UpdateAction(Actor& actor) {
-	actor.Update();
+void UpdateAction(Actor* actor) {
+	actor->Update();
 }
 
-void DrawAction(Actor& actor) {
-	auto sprite = (Sprite&)actor;
-	sprite.Draw();
+void DrawAction(Actor* actor) {
+	auto sprite = (Sprite*)actor;
+	sprite->Draw();
 }
 
 int main( int argc, char **argv ){
@@ -109,8 +109,8 @@ int main( int argc, char **argv ){
 
 	World world;
 	for (size_t i = 0; i < 100; i++) {
-		auto sprite = (Sprite&)world.AllocateActor(Sprite::ID);
-		sprite.Create();
+		auto sprite = world.AllocateActor(Sprite::ID);
+		sprite->Create();
 	}
 
 	while(1) {

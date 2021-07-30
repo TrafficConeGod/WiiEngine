@@ -9,7 +9,7 @@ class Actor {
     public:
         ushort id;
 
-        explicit Actor(World& world);
+        explicit Actor(World* world);
 
         virtual void Load(DataStream& stream);
         virtual void Save(DataStream& stream);
