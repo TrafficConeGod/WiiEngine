@@ -1,12 +1,12 @@
 #pragma once
 #include "../Actor.h"
+#include "../Vector2.h"
 
 class Sprite : public Actor {
     public:
         static const ushort ID = 1;
 
-        int x;
-        int y;
+        Vector2i pos;
         int image;
 
         using Actor::Actor;

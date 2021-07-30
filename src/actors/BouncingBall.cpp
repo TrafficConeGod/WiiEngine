@@ -1,4 +1,5 @@
 #include "BouncingBall.h"
+#include "../templates.h"
 
 bool BouncingBall::IsOfType(ushort id) {
     return Sprite::IsOfType(id) || id == BouncingBall::ID;
@@ -6,30 +7,28 @@ bool BouncingBall::IsOfType(ushort id) {
 
 void BouncingBall::Create() {
 	Sprite::Create();
-    x = rand() % (640 - 32) << 8;
-	y = rand() % (480 - 32) << 8 ;
-	dx = (rand() & 0xFF) + 0x100;
-	dy = (rand() & 0xFF) + 0x100;
+    pos = Vector2i(rand() % (640 - 32) << 8, rand() % (480 - 32) << 8);
+	vel = Vector2i((rand() & 0xFF) + 0x100, (rand() & 0xFF) + 0x100);
 	image = rand() & 3;
 
 	if (rand() & 1) {
-		dx = -dx;
+		vel.x = -vel.x;
     }
 	if (rand() & 1) {
-		dy = -dy;
+		vel.y = -vel.y;
     }
 }
 
 void BouncingBall::Update() {
 	Sprite::Update();
-    x += dx;
-	y += dy;
+    pos.x += vel.x;
+	pos.y += vel.y;
 
-	if(x < (1 << 8) || x > ((640 - 32) << 8)) {
-		dx = -dx;
+	if (pos.x < (1 << 8) || pos.x > ((640 - 32) << 8)) {
+		vel.x = -vel.x;
     }
 
-	if(y < (1 << 8) || y > ((480 - 32) << 8)) {
-		dy = -dy;
+	if (pos.y < (1 << 8) || pos.y > ((480 - 32) << 8)) {
+		vel.y = -vel.y;
     }
 }
