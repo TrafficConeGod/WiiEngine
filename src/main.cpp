@@ -5,10 +5,10 @@
 #include "actors/Sprite.h"
 #include "templates.h"
 
-#define DEFAULT_FIFO_SIZE	(256*1024)
+#define DEFAULT_FIFO_SIZE (256*1024)
 
-static void *frameBuffer[2] = { NULL, NULL};
-static GXRModeObj *rmode;
+static void* frameBuffer[2] = { NULL, NULL};
+static GXRModeObj* rMode;
 
 GXTexObj texObj;
 
@@ -25,63 +25,66 @@ void DrawAction(Actor* actor) {
 	sprite->Draw();
 }
 
-int main( int argc, char **argv ){
+int main(int argc, char** argv){
 	u32	fb; 	// initial framebuffer index
-	u32 first_frame;
+	u32 firstFrame;
 	f32 yscale;
 	u32 xfbHeight;
 	Mtx44 perspective;
 	Mtx GXmodelView2D;
-	void *gp_fifo = NULL;
+	void* gpFifo = NULL;
 
 	GXColor background = {0, 0, 0, 0xff};
 
 	VIDEO_Init();
 
-	rmode = VIDEO_GetPreferredMode(NULL);
+	rMode = VIDEO_GetPreferredMode(NULL);
 
 	fb = 0;
-	first_frame = 1;
+	firstFrame = 1;
 	// allocate 2 framebuffers for double buffering
-	frameBuffer[0] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rmode));
-	frameBuffer[1] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rmode));
+	frameBuffer[0] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rMode));
+	frameBuffer[1] = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rMode));
 
-	VIDEO_Configure(rmode);
+	VIDEO_Configure(rMode);
 	VIDEO_SetNextFramebuffer(frameBuffer[fb]);
 	VIDEO_SetBlack(FALSE);
 	VIDEO_Flush();
 	VIDEO_WaitVSync();
-	if(rmode->viTVMode&VI_NON_INTERLACE) VIDEO_WaitVSync();
+	if (rMode->viTVMode & VI_NON_INTERLACE) {
+		VIDEO_WaitVSync();
+	}
 
 	fb ^= 1;
 
 	// setup the fifo and then init the flipper
-	gp_fifo = memalign(32,DEFAULT_FIFO_SIZE);
-	memset(gp_fifo,0,DEFAULT_FIFO_SIZE);
+	gpFifo = memalign(32, DEFAULT_FIFO_SIZE);
+	memset(gpFifo, 0, DEFAULT_FIFO_SIZE);
 
-	GX_Init(gp_fifo,DEFAULT_FIFO_SIZE);
+	GX_Init(gpFifo, DEFAULT_FIFO_SIZE);
 
 	// clears the bg to color and clears the z buffer
 	GX_SetCopyClear(background, 0x00ffffff);
 
 	// other gx setup
-	GX_SetViewport(0,0,rmode->fbWidth,rmode->efbHeight,0,1);
-	yscale = GX_GetYScaleFactor(rmode->efbHeight,rmode->xfbHeight);
+	GX_SetViewport(0, 0, rMode->fbWidth, rMode->efbHeight, 0, 1);
+	yscale = GX_GetYScaleFactor(rMode->efbHeight, rMode->xfbHeight);
 	xfbHeight = GX_SetDispCopyYScale(yscale);
-	GX_SetScissor(0,0,rmode->fbWidth,rmode->efbHeight);
-	GX_SetDispCopySrc(0,0,rmode->fbWidth,rmode->efbHeight);
-	GX_SetDispCopyDst(rmode->fbWidth,xfbHeight);
-	GX_SetCopyFilter(rmode->aa,rmode->sample_pattern,GX_TRUE,rmode->vfilter);
-	GX_SetFieldMode(rmode->field_rendering,((rmode->viHeight==2*rmode->xfbHeight)?GX_ENABLE:GX_DISABLE));
+	GX_SetScissor(0, 0, rMode->fbWidth, rMode->efbHeight);
+	GX_SetDispCopySrc(0, 0, rMode->fbWidth, rMode->efbHeight);
+	GX_SetDispCopyDst(rMode->fbWidth, xfbHeight);
+	GX_SetCopyFilter(rMode->aa, rMode->sample_pattern, GX_TRUE, rMode->vfilter);
+	GX_SetFieldMode(rMode->field_rendering, ((rMode->viHeight == 2 * rMode->xfbHeight) ? GX_ENABLE : GX_DISABLE));
 
-	if (rmode->aa)
+	if (rMode->aa) {
 		GX_SetPixelFmt(GX_PF_RGB565_Z16, GX_ZC_LINEAR);
-	else
+	} else {
 		GX_SetPixelFmt(GX_PF_RGB8_Z24, GX_ZC_LINEAR);
+	}
 
 
 	GX_SetCullMode(GX_CULL_NONE);
-	GX_CopyDisp(frameBuffer[fb],GX_TRUE);
+	GX_CopyDisp(frameBuffer[fb], GX_TRUE);
 	GX_SetDispCopyGamma(GX_GM_1_0);
 
 	// setup the vertex descriptor
@@ -100,11 +103,11 @@ int main( int argc, char **argv ){
 	GX_InvalidateTexAll();
 
 	TPLFile spriteTPL;
-	TPL_OpenTPLFromMemory(&spriteTPL, (void *)textures_tpl,textures_tpl_size);
-	TPL_GetTexture(&spriteTPL,ballsprites,&texObj);
+	TPL_OpenTPLFromMemory(&spriteTPL, (void*)textures_tpl, textures_tpl_size);
+	TPL_GetTexture(&spriteTPL, ballsprites, &texObj);
 	GX_LoadTexObj(&texObj, GX_TEXMAP0);
 
-	guOrtho(perspective,0,479,0,639,0,300);
+	guOrtho(perspective, 0, 479, 0, 639, 0, 300);
 	GX_LoadProjectionMtx(perspective, GX_ORTHOGRAPHIC);
 
 	WPAD_Init();
@@ -117,13 +120,13 @@ int main( int argc, char **argv ){
 	}
 	world.DoAction(CreateAction);
 
-	while(1) {
+	while (true) {
 
 		WPAD_ScanPads();
 
 		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) exit(0);
 
-		GX_SetViewport(0,0,rmode->fbWidth,rmode->efbHeight,0,1);
+		GX_SetViewport(0, 0, rMode->fbWidth, rMode->efbHeight, 0, 1);
 		GX_InvVtxCache();
 		GX_InvalidateTexAll();
 
@@ -133,7 +136,7 @@ int main( int argc, char **argv ){
 
 		guMtxIdentity(GXmodelView2D);
 		guMtxTransApply (GXmodelView2D, GXmodelView2D, 0.0F, 0.0F, -5.0F);
-		GX_LoadPosMtxImm(GXmodelView2D,GX_PNMTX0);
+		GX_LoadPosMtxImm(GXmodelView2D, GX_PNMTX0);
 
 		world.DoAction(UpdateAction);
 		world.DoActionOn(Sprite::ID, DrawAction);
@@ -144,12 +147,12 @@ int main( int argc, char **argv ){
 		GX_SetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
 		GX_SetAlphaUpdate(GX_TRUE);
 		GX_SetColorUpdate(GX_TRUE);
-		GX_CopyDisp(frameBuffer[fb],GX_TRUE);
+		GX_CopyDisp(frameBuffer[fb], GX_TRUE);
 
 		VIDEO_SetNextFramebuffer(frameBuffer[fb]);
-		if(first_frame) {
+		if (firstFrame) {
 			VIDEO_SetBlack(FALSE);
-			first_frame = 0;
+			firstFrame = 0;
 		}
 		VIDEO_Flush();
 		VIDEO_WaitVSync();
