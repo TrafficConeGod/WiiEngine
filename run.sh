@@ -1,0 +1,1 @@
+dolphin-emu -e WiiEngine.dol

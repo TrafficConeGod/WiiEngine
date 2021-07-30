@@ -1,1 +1,0 @@
-#define ballsprites 0

@@ -24,8 +24,8 @@ Actor& World::AllocateActor(ushort id) {
 }
 
 Actor& World::LoadActor(DataStream& stream) {
-    ushort id;
-    stream >> id;
+    ushort id = 0;
+    // stream >> id;
 
     Actor& actor = AllocateActor(id);
     actor.Load(stream);
@@ -34,9 +34,9 @@ Actor& World::LoadActor(DataStream& stream) {
 }
 
 void World::LoadActors(DataStream& stream) {
-    while (stream.IsReadable()) {
-        LoadActor(stream);
-    }
+    // while (stream.IsReadable()) {
+    //     LoadActor(stream);
+    // }
 }
 
 void World::DoAction(void (*action)(Actor&)) {

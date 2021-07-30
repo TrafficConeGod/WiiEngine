@@ -4,6 +4,14 @@
 
 Actor::Actor(World& _world) : world{&_world} {}
 
+void Actor::Load(DataStream& stream) {
+    
+}
+
+void Actor::Save(DataStream& stream) {
+    
+}
+
 void Actor::Create() {
     puts("Default actor create");
 }
