@@ -2,6 +2,7 @@
 #include "../wii/io.h"
 
 void Sprite::Create() {
+	Actor::Create();
     x = rand() % (640 - 32 ) << 8;
 	y = rand() % (480 - 32 ) << 8 ;
 	dx = (rand() & 0xFF) + 0x100;
@@ -15,6 +16,7 @@ void Sprite::Create() {
 }
 
 void Sprite::Update() {
+	Actor::Update();
     x += dx;
 	y += dy;
 
@@ -55,5 +57,5 @@ void Sprite::Draw() {
 	texIndex+=2;
 	GX_Position2f32(drawX,drawY+height-1);			// Bottom Left
 	GX_TexCoord2f32(texCoords[texIndex],texCoords[texIndex+1]);
-	GX_End();	
+	GX_End();
 }

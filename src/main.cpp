@@ -3,6 +3,7 @@
 #include "wii/textures.h"
 #include "World.h"
 #include "actors/Sprite.h"
+#include "templates.h"
 
 #define DEFAULT_FIFO_SIZE	(256*1024)
 
@@ -20,9 +21,7 @@ void DrawAction(Actor& actor) {
 	sprite.Draw();
 }
 
-//---------------------------------------------------------------------------------
 int main( int argc, char **argv ){
-//---------------------------------------------------------------------------------
 	u32	fb; 	// initial framebuffer index
 	u32 first_frame;
 	f32 yscale;

@@ -2,7 +2,7 @@
 #include "actors/MyActor.h"
 #include "actors/Sprite.h"
 #include "wii/io.h"
-#include "templates.inl"
+#include "templates.h"
 
 Actor& World::AllocateActor(ushort id) {
     Actor* actor_ptr;
