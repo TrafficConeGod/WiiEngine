@@ -12,6 +12,10 @@ static GXRModeObj *rmode;
 
 GXTexObj texObj;
 
+void CreateAction(Actor* actor) {
+	actor->Create();
+}
+
 void UpdateAction(Actor* actor) {
 	actor->Update();
 }
@@ -108,10 +112,10 @@ int main( int argc, char **argv ){
 	srand(time(NULL));
 
 	World world;
-	for (size_t i = 0; i < 100; i++) {
-		auto sprite = world.AllocateActor(Sprite::ID);
-		sprite->Create();
+	for (size_t i = 0; i < 1024; i++) {
+		world.AllocateActor(Sprite::ID);
 	}
+	world.DoAction(CreateAction);
 
 	while(1) {
 
