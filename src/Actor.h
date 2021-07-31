@@ -8,6 +8,7 @@ class Actor {
         World* world;
     public:
         static const uint ID = 0;
+        bool created;
 
         explicit Actor(World* world);
 

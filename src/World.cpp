@@ -1,6 +1,8 @@
 #include "World.h"
 #include "actors/Sprite.h"
 #include "actors/BouncingBall.h"
+#include "actors/Inputtable.h"
+#include "actors/Character.h"
 #include "wii/io.h"
 #include "templates.h"
 
@@ -15,6 +17,12 @@ Actor* World::AllocateActor(ushort id) {
             break;
         case BouncingBall::ID:
             actor = new BouncingBall(this);
+            break;
+        case Character::ID:
+            actor = new Character(this);
+            break;
+        case Inputtable::ID:
+            actor = new Inputtable(this);
             break;
         default:
             puts("Invalid actor id");

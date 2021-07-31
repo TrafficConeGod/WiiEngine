@@ -4,5 +4,15 @@
     ],
     "C_Cpp.default.includePath": [
         "src"
-    ]
+    ],
+    "files.associations": {
+        "*.tst": "objective-c",
+        "*.toast": "objective-c",
+        "*.txt": "python",
+        "*.tt": "cpp",
+        "*.tcc": "cpp",
+        "iomanip": "cpp",
+        "istream": "cpp",
+        "ostream": "cpp"
+    }
 }

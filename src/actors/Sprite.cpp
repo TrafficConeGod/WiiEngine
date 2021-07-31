@@ -3,7 +3,7 @@
 #include "../templates.h"
 
 bool Sprite::IsOfType(ushort id) {
-	return Actor::IsOfType(id) || id == ID;
+	return id == ID || Actor::IsOfType(id);
 }
 
 float texCoords[] = {

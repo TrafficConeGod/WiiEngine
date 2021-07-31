@@ -4,6 +4,7 @@
 #include "World.h"
 #include "actors/Sprite.h"
 #include "actors/BouncingBall.h"
+#include "actors/Character.h"
 #include "templates.h"
 
 #define DEFAULT_FIFO_SIZE (256*1024)
@@ -116,9 +117,10 @@ int main(int argc, char** argv){
 	srand(time(NULL));
 
 	World world;
-	for (size_t i = 0; i < 1024; i++) {
-		world.AllocateActor(BouncingBall::ID);
-	}
+	// for (size_t i = 0; i < 1024; i++) {
+	// 	world.AllocateActor(BouncingBall::ID);
+	// }
+	world.AllocateActor(Character::ID);
 	world.DoAction(CreateAction);
 
 	while (true) {
@@ -136,7 +138,7 @@ int main(int argc, char** argv){
 		GX_SetVtxDesc(GX_VA_TEX0, GX_DIRECT);
 
 		guMtxIdentity(GXmodelView2D);
-		guMtxTransApply (GXmodelView2D, GXmodelView2D, 0.0F, 0.0F, -5.0F);
+		guMtxTransApply(GXmodelView2D, GXmodelView2D, 0.0F, 0.0F, -5.0F);
 		GX_LoadPosMtxImm(GXmodelView2D, GX_PNMTX0);
 
 		world.DoAction(UpdateAction);

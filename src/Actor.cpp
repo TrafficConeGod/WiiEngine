@@ -17,6 +17,7 @@ void Actor::Save(DataStream& stream) {
 }
 
 void Actor::Create() {
+    created = true;
     puts("Default actor create");
 }
 
