@@ -2,11 +2,11 @@
 #include "templates.h"
 
 bool BouncingBall::IsOfType(ushort id) {
-    return id == ID || ISprite::IsOfType(id) || Actor::IsOfType(id);
+    return id == ID || Sprite::IsOfType(id);
 }
 
 void BouncingBall::Create() {
-	Actor::Create();
+	Sprite::Create();
     pos = Vector2i(rand() % (640 - 32) << 8, rand() % (480 - 32) << 8);
 	vel = Vector2i((rand() & 0xFF) + 0x100, (rand() & 0xFF) + 0x100);
 	image = rand() & 3;
@@ -20,7 +20,7 @@ void BouncingBall::Create() {
 }
 
 void BouncingBall::Update() {
-	Actor::Update();
+	Sprite::Update();
     pos.x += vel.x;
 	pos.y += vel.y;
 

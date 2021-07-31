@@ -17,14 +17,10 @@ void Actor::Save(DataStream& stream) {
 }
 
 void Actor::Create() {
-    created = true;
-    puts("Default actor create");
 }
 
 void Actor::Destroy() {
-    puts("Default actor destroy");
 }
 
 void Actor::Update() {
-    puts("Default actor update");
 }

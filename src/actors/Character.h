@@ -1,13 +1,12 @@
 #pragma once
-#include "interfaces/ISprite.h"
-#include "interfaces/IInputtable.h"
-#include "Actor.h"
+#include "Sprite.h"
+#include "Inputtable.h"
 
-class Character : public Actor, public virtual IInputtable, public virtual ISprite {
+class Character : public virtual Inputtable, public virtual Sprite {
     public:
         static const ushort ID = 3;
 
-        using Actor::Actor;
+        Character(World* world);
         virtual bool IsOfType(ushort id);
 
         virtual void Create();

@@ -1,10 +1,10 @@
 #include "debug.h"
-#include "ISprite.h"
+#include "Sprite.h"
 #include "wii/io.h"
 #include "templates.h"
 
-bool ISprite::IsOfType(ushort id) {
-	return id == ID;
+bool Sprite::IsOfType(ushort id) {
+	return id == ID || Actor::IsOfType(id);
 }
 
 float texCoords[] = {
@@ -14,7 +14,7 @@ float texCoords[] = {
 	0.5, 0.5,  1.0, 0.5, 1.0, 1.0, 0.5, 1.0
 };
 
-void ISprite::Draw() {
+void Sprite::Draw() {
 	#ifndef PC_DEBUG
 	const int width = 32;
 	const int height = 32;
