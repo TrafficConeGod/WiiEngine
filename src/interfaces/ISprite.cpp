@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "ISprite.h"
 #include "wii/io.h"
 #include "templates.h"
@@ -14,6 +15,7 @@ float texCoords[] = {
 };
 
 void ISprite::Draw() {
+	#ifndef PC_DEBUG
 	const int width = 32;
 	const int height = 32;
 	int x = pos.x >> 8;
@@ -34,4 +36,5 @@ void ISprite::Draw() {
 	GX_Position2f32(x, y + height - 1);			// Bottom Left
 	GX_TexCoord2f32(texCoords[texIndex], texCoords[texIndex + 1]);
 	GX_End();
+	#endif
 }

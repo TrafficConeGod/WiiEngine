@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "wii/io.h"
 #include "wii/textures_tpl.h"
 #include "wii/textures.h"
@@ -33,6 +34,8 @@ void ButtonPressedAction(Actor* actor) {
 }
 
 int main(int argc, char** argv){
+	#ifndef PC_DEBUG
+
 	u32	frameBuf; 	// initial framebuffer index
 	u32 firstFrame;
 	f32 yScale;
@@ -121,14 +124,18 @@ int main(int argc, char** argv){
 
 	srand(time(NULL));
 
+	#endif
+
 	World world;
-	for (size_t i = 0; i < 1024; i++) {
+	for (size_t i = 0; i < 1; i++) {
 		world.AllocateActor(BouncingBall::ID);
 	}
 	world.AllocateActor(Character::ID);
 	world.DoAction(CreateAction);
 
 	while (true) {
+
+		#ifndef PC_DEBUG
 
 		WPAD_ScanPads();
 
@@ -152,8 +159,12 @@ int main(int argc, char** argv){
 		guMtxTransApply(GXmodelView2D, GXmodelView2D, 0.0F, 0.0F, -5.0F);
 		GX_LoadPosMtxImm(GXmodelView2D, GX_PNMTX0);
 
+		#endif
+
 		world.DoAction(UpdateAction);
 		world.DoActionOn(ISprite::ID, DrawAction);
+
+		#ifndef PC_DEBUG
 
 		GX_DrawDone();
 
@@ -171,6 +182,8 @@ int main(int argc, char** argv){
 		VIDEO_Flush();
 		VIDEO_WaitVSync();
 		frameBuf ^= 1;		// flip framebuffer
+
+		#endif
 	}
 	return 0;
 }

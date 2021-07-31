@@ -3,7 +3,7 @@
 #include "interfaces/ISprite.h"
 #include "Vector2.h"
 
-class BouncingBall : public Actor, public ISprite {
+class BouncingBall : public Actor, public virtual ISprite {
     public:
         static const ushort ID = 2;
 

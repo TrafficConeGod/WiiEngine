@@ -3,7 +3,7 @@
 #include "interfaces/IInputtable.h"
 #include "Actor.h"
 
-class Character : public Actor, public ISprite, public IInputtable {
+class Character : public Actor, public virtual IInputtable, public virtual ISprite {
     public:
         static const ushort ID = 3;
 
