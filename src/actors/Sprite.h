@@ -1,15 +1,15 @@
 #pragma once
-#include "../Actor.h"
+#include "Inputtable.h"
 #include "../Vector2.h"
 
-class Sprite : public Actor {
+class Sprite : public Inputtable /** Coming from working on an ecs this feels so fucking wrong to me */ {
     public:
         static const ushort ID = 1;
 
         Vector2i pos;
         int image;
 
-        using Actor::Actor;
+        using Inputtable::Inputtable;
         virtual bool IsOfType(ushort id);
 
         virtual void Draw();

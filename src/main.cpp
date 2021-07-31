@@ -27,6 +27,11 @@ void DrawAction(Actor* actor) {
 	sprite->Draw();
 }
 
+void ButtonPressedAction(Actor* actor) {
+	auto inputtable = (Inputtable*)actor;
+	inputtable->ButtonPressed();
+}
+
 int main(int argc, char** argv){
 	u32	frameBuf; 	// initial framebuffer index
 	u32 firstFrame;
@@ -127,7 +132,13 @@ int main(int argc, char** argv){
 
 		WPAD_ScanPads();
 
-		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) exit(0);
+		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) {
+			exit(0);
+		}
+
+		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_A) {
+			world.DoActionOn(Inputtable::ID, ButtonPressedAction);
+		}
 
 		GX_SetViewport(0, 0, rMode->fbWidth, rMode->efbHeight, 0, 1);
 		GX_InvVtxCache();
