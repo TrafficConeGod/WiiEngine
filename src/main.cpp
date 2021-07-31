@@ -24,13 +24,11 @@ void UpdateAction(Actor* actor) {
 	actor->Update();
 }
 
-void DrawAction(Actor* actor) {
-	auto sprite = dynamic_cast<Sprite*>(actor);
+void DrawAction(Sprite* sprite) {
 	sprite->Draw();
 }
 
-void ButtonPressedAction(Actor* actor) {
-	auto inputtable = dynamic_cast<Inputtable*>(actor);
+void ButtonPressedAction(Inputtable* inputtable) {
 	inputtable->ButtonPressed();
 }
 
@@ -145,7 +143,7 @@ int main(int argc, char** argv){
 		}
 
 		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_A) {
-			world.DoActionOn(Inputtable::ID, ButtonPressedAction);
+			world.DoActionOn(ButtonPressedAction);
 		}
 
 		GX_SetViewport(0, 0, rMode->fbWidth, rMode->efbHeight, 0, 1);
@@ -163,7 +161,7 @@ int main(int argc, char** argv){
 		#endif
 
 		world.DoAction(UpdateAction);
-		world.DoActionOn(Sprite::ID, DrawAction);
+		world.DoActionOn(DrawAction);
 
 		#ifndef PC_DEBUG
 

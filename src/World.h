@@ -14,5 +14,6 @@ class World {
         void LoadActors(DataStream& stream);
 
         void DoAction(void (*action)(Actor*));
-        void DoActionOn(ushort id, void (*action)(Actor*));
+        template<typename T>
+        void DoActionOn(void (*action)(T*));
 };

@@ -47,12 +47,3 @@ void World::DoAction(void (*action)(Actor*)) {
         action(actor);
     }
 }
-
-void World::DoActionOn(ushort id, void (*action)(Actor*)) {
-    for (size_t i = 0; i < actors.size; i++) {
-        auto actor = actors[i];
-        if (actor->IsOfType(id)) {
-            action(actor);
-        }
-    }
-}
