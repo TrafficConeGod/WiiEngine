@@ -2,8 +2,7 @@
 #include "wii/textures_tpl.h"
 #include "wii/textures.h"
 #include "World.h"
-#include "interfaces/ISprite.h"
-#include "interfaces/IInputtable.h"
+#include "actors/virtualImplementations.h"
 #include "actors/BouncingBall.h"
 #include "actors/Character.h"
 #include "templates.h"
@@ -24,12 +23,12 @@ void UpdateAction(Actor* actor) {
 }
 
 void DrawAction(Actor* actor) {
-	auto sprite = (ISprite*)actor;
+	auto sprite = (Sprite*)actor;
 	sprite->Draw();
 }
 
 void ButtonPressedAction(Actor* actor) {
-	auto inputtable = (IInputtable*)actor;
+	auto inputtable = (Inputtable*)actor;
 	inputtable->ButtonPressed();
 }
 
@@ -123,9 +122,9 @@ int main(int argc, char** argv){
 	srand(time(NULL));
 
 	World world;
-	// for (size_t i = 0; i < 1024; i++) {
-	// 	world.AllocateActor(BouncingBall::ID);
-	// }
+	for (size_t i = 0; i < 1024; i++) {
+		world.AllocateActor(BouncingBall::ID);
+	}
 	world.AllocateActor(Character::ID);
 	world.DoAction(CreateAction);
 
