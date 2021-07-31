@@ -22,10 +22,10 @@ include $(DEVKITPPC)/wii_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	src src/actors
+SOURCES		:=	src src/actors src/interfaces src/wii
 DATA		:=
 TEXTURES	:=	tex
-INCLUDES	:=
+INCLUDES	:=  src
 
 #---------------------------------------------------------------------------------
 # options for code generation

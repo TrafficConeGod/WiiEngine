@@ -1,17 +1,17 @@
 #include "Character.h"
-#include "../templates.h"
+#include "templates.h"
 
 bool Character::IsOfType(ushort id) {
-    return id == ID || Sprite::IsOfType(id);
+    return id == ID || ISprite::IsOfType(id) || IInputtable::IsOfType(id) || Actor::IsOfType(id);
 }
 
 void Character::Create() {
-    Sprite::Create();
+    Actor::Create();
     pos = Vector2i(10000, 10000);
 	image = 0;
 }
 
 void Character::ButtonPressed() {
-    Sprite::ButtonPressed();
+    IInputtable::ButtonPressed();
     pos = Vector2i(30000, 30000);
 }

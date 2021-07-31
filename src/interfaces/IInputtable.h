@@ -1,11 +1,10 @@
 #pragma once
-#include "../Actor.h"
+#include "Actor.h"
 
-class Inputtable : public Actor {
+class IInputtable {
     public:
         static const ushort ID = 4;
 
-        using Actor::Actor;
         virtual bool IsOfType(ushort id);
 
         virtual void ButtonPressed();

@@ -1,9 +1,9 @@
-#include "Sprite.h"
-#include "../wii/io.h"
-#include "../templates.h"
+#include "ISprite.h"
+#include "wii/io.h"
+#include "templates.h"
 
-bool Sprite::IsOfType(ushort id) {
-	return id == ID || Inputtable::IsOfType(id);
+bool ISprite::IsOfType(ushort id) {
+	return id == ID;
 }
 
 float texCoords[] = {
@@ -13,7 +13,7 @@ float texCoords[] = {
 	0.5, 0.5,  1.0, 0.5, 1.0, 1.0, 0.5, 1.0
 };
 
-void Sprite::Draw() {
+void ISprite::Draw() {
 	const int width = 32;
 	const int height = 32;
 	int x = pos.x >> 8;

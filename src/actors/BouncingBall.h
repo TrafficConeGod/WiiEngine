@@ -1,14 +1,15 @@
 #pragma once
-#include "Sprite.h"
-#include "../Vector2.h"
+#include "Actor.h"
+#include "interfaces/ISprite.h"
+#include "Vector2.h"
 
-class BouncingBall : public Sprite {
+class BouncingBall : public Actor, public ISprite {
     public:
         static const ushort ID = 2;
 
         Vector2i vel;
 
-        using Sprite::Sprite;
+        using Actor::Actor;
         virtual bool IsOfType(ushort id);
 
         virtual void Create();

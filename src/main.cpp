@@ -2,7 +2,8 @@
 #include "wii/textures_tpl.h"
 #include "wii/textures.h"
 #include "World.h"
-#include "actors/Sprite.h"
+#include "interfaces/ISprite.h"
+#include "interfaces/IInputtable.h"
 #include "actors/BouncingBall.h"
 #include "actors/Character.h"
 #include "templates.h"
@@ -23,12 +24,12 @@ void UpdateAction(Actor* actor) {
 }
 
 void DrawAction(Actor* actor) {
-	auto sprite = (Sprite*)actor;
+	auto sprite = (ISprite*)actor;
 	sprite->Draw();
 }
 
 void ButtonPressedAction(Actor* actor) {
-	auto inputtable = (Inputtable*)actor;
+	auto inputtable = (IInputtable*)actor;
 	inputtable->ButtonPressed();
 }
 
@@ -137,7 +138,7 @@ int main(int argc, char** argv){
 		}
 
 		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_A) {
-			world.DoActionOn(Inputtable::ID, ButtonPressedAction);
+			world.DoActionOn(IInputtable::ID, ButtonPressedAction);
 		}
 
 		GX_SetViewport(0, 0, rMode->fbWidth, rMode->efbHeight, 0, 1);
@@ -153,7 +154,7 @@ int main(int argc, char** argv){
 		GX_LoadPosMtxImm(GXmodelView2D, GX_PNMTX0);
 
 		world.DoAction(UpdateAction);
-		world.DoActionOn(Sprite::ID, DrawAction);
+		world.DoActionOn(ISprite::ID, DrawAction);
 
 		GX_DrawDone();
 
