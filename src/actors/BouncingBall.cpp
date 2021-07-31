@@ -2,7 +2,7 @@
 #include "../templates.h"
 
 bool BouncingBall::IsOfType(ushort id) {
-    return Sprite::IsOfType(id) || id == BouncingBall::ID;
+    return Sprite::IsOfType(id) || id == ID;
 }
 
 void BouncingBall::Create() {
