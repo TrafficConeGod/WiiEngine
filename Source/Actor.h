@@ -1,7 +1,8 @@
 #pragma once
 #include "Wii/type.h"
-#include "Stage.h"
 #include "DataStream.h"
+
+class Stage;
 
 class Actor {
     protected:
@@ -14,7 +15,6 @@ class Actor {
         virtual bool IsOfType(ushort id);
 
         virtual void Load(DataStream& stream);
-        virtual void Save(DataStream& stream);
 
         virtual void Create();
         virtual void Destroy();

@@ -1,10 +1,14 @@
 #include "debug.h"
 #include "Sprite.h"
 #include "Wii/io.h"
-#include "templates.h"
 
 bool Sprite::IsOfType(ushort id) {
 	return id == ID || Actor::IsOfType(id);
+}
+
+void Sprite::Load(DataStream& stream) {
+	stream >> pos;
+	stream >> image;
 }
 
 float texCoords[] = {

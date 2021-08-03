@@ -11,6 +11,8 @@ class Sprite : public virtual Actor {
 
         using Actor::Actor;
         virtual bool IsOfType(ushort id);
+        
+        virtual void Load(DataStream& stream);
 
         virtual void Draw();
 };

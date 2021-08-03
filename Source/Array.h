@@ -15,3 +15,5 @@ class Array {
         void Push(const T& val);
         T Pop();
 };
+
+#include "Array.inl"

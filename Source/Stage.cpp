@@ -2,7 +2,6 @@
 #include "Actors/BouncingBall.h"
 #include "Actors/Character.h"
 #include "Wii/io.h"
-#include "templates.h"
 
 Stage::~Stage() {
     for (size_t i = 0; i < actors.size; i++) {

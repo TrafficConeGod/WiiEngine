@@ -1,4 +1,5 @@
 #include "Stage.h"
+#include "Actor.h"
 
 template<typename T>
 void Stage::DoActionOn(void (*action)(T*)) {

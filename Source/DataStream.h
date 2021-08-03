@@ -4,17 +4,23 @@
 
 class DataStream {
     private:
-        uchar buf;
-        size_t size;
+        size_t pos = 0;
+
+        template<typename T>
+        inline T* PtrAtPos();
     public:
-        DataStream(size_t size);
-        ~DataStream();
+        void* buf;
+        size_t size;
+
+        DataStream(void* buf, size_t size);
 
         template<typename T>
-        DataStream& operator<<(const T& val);
+        inline DataStream& operator<<(const T& val);
 
         template<typename T>
-        DataStream& operator>>(T& val);
+        inline DataStream& operator>>(T& val);
 
-        bool IsReadable();
+        inline bool IsReadable();
 };
+
+#include "DataStream.inl"

@@ -3,7 +3,7 @@
         "/usr/include/", "/usr/lib/gcc/x86_64-linux-gnu/9/include/", "/opt/devkitpro/libogc/include/"
     ],
     "C_Cpp.default.includePath": [
-        "src"
+        "Source"
     ],
     "files.associations": {
         "*.tst": "objective-c",

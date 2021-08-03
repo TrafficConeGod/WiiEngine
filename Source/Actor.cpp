@@ -1,4 +1,5 @@
 #include "Actor.h"
+#include "Stage.h"
 #include "Wii/mem.h"
 #include "Wii/io.h"
 
@@ -9,10 +10,6 @@ bool Actor::IsOfType(ushort id) {
 }
 
 void Actor::Load(DataStream& stream) {
-    
-}
-
-void Actor::Save(DataStream& stream) {
     
 }
 

@@ -14,3 +14,5 @@ class Vector2 {
 typedef Vector2<int> Vector2i;
 typedef Vector2<uint> Vector2u;
 typedef Vector2<float> Vector2f;
+
+#include "Vector2.inl"

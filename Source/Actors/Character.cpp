@@ -1,5 +1,4 @@
 #include "Character.h"
-#include "templates.h"
 
 Character::Character(Stage* _stage) : Sprite(_stage), Inputtable(_stage), Actor(_stage) {}
 

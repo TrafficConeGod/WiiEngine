@@ -19,3 +19,5 @@ class Stage {
         template<typename T>
         void DoActionOn(void (*action)(T*));
 };
+
+#include "Stage.inl"

@@ -7,7 +7,6 @@
 #include "Actors/Inputtable.h"
 #include "Actors/BouncingBall.h"
 #include "Actors/Character.h"
-#include "templates.h"
 
 #define DEFAULT_FIFO_SIZE (256*1024)
 
