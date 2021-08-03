@@ -10,7 +10,6 @@ class Sprite : public virtual Actor {
         int image;
 
         using Actor::Actor;
-        static bool CheckType(ushort id);
         virtual bool IsOfType(ushort id);
 
         virtual void Draw();

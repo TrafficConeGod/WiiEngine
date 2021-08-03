@@ -11,7 +11,6 @@ class Actor {
 
         explicit Actor(World* world);
 
-        static bool CheckType(ushort id);
         virtual bool IsOfType(ushort id);
 
         virtual void Load(DataStream& stream);

@@ -7,7 +7,6 @@ class Character : public virtual Inputtable, public virtual Sprite {
         static const ushort ID = 3;
 
         Character(World* world);
-        static bool CheckType(ushort id);
         virtual bool IsOfType(ushort id);
 
         virtual void Create();
