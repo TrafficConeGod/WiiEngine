@@ -1,5 +1,5 @@
 #pragma once
-#include "wii/type.h"
+#include "Wii/type.h"
 
 template<typename T>
 class Vector2 {

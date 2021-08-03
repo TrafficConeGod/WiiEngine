@@ -1,5 +1,5 @@
 #pragma once
-#include "wii/io.h"
+#include "Wii/io.h"
 
 template<typename T>
 class Array {

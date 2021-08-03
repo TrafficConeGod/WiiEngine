@@ -1,5 +1,5 @@
 #pragma once
-#include "wii/type.h"
+#include "Wii/type.h"
 #include "World.h"
 #include "DataStream.h"
 
@@ -9,7 +9,7 @@ class Actor {
     public:
         static const uint ID = 0;
 
-        explicit Actor(World* world);
+        Actor(World* world);
 
         virtual bool IsOfType(ushort id);
 

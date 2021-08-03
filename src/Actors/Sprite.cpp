@@ -1,6 +1,6 @@
 #include "debug.h"
 #include "Sprite.h"
-#include "wii/io.h"
+#include "Wii/io.h"
 #include "templates.h"
 
 bool Sprite::IsOfType(ushort id) {

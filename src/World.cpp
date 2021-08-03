@@ -1,12 +1,12 @@
 #include "World.h"
-#include "actors/BouncingBall.h"
-#include "actors/Character.h"
-#include "wii/io.h"
+#include "Actors/BouncingBall.h"
+#include "Actors/Character.h"
+#include "Wii/io.h"
 #include "templates.h"
 
 World::~World() {
     for (size_t i = 0; i < actors.size; i++) {
-        delete actors[i];
+        free(actors[i]);
     }
 }
 
@@ -33,18 +33,18 @@ Actor* World::AllocateActor(ushort id) {
 
 Actor* World::LoadActor(DataStream& stream) {
     ushort id = 0;
-    // stream >> id;
+    stream >> id;
 
     auto actor = AllocateActor(id);
     actor->Load(stream);
-
+    actors.Push(actor);
     return actor;
 }
 
 void World::LoadActors(DataStream& stream) {
-    // while (stream.IsReadable()) {
-    //     LoadActor(stream);
-    // }
+    while (stream.IsReadable()) {
+        LoadActor(stream);
+    }
 }
 
 void World::DoAction(void (*action)(Actor*)) {

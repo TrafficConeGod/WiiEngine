@@ -1,6 +1,6 @@
 #pragma once
-#include "wii/type.h"
-#include "wii/io.h"
+#include "Wii/type.h"
+#include "Wii/io.h"
 
 class DataStream {
     private:

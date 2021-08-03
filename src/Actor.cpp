@@ -1,6 +1,6 @@
 #include "Actor.h"
-#include "wii/mem.h"
-#include "wii/io.h"
+#include "Wii/mem.h"
+#include "Wii/io.h"
 
 Actor::Actor(World* _world) : world{_world} {}
 
