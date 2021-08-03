@@ -3,8 +3,12 @@
 
 Character::Character(World* _world) : Sprite(_world), Inputtable(_world), Actor(_world) {}
 
+bool Character::CheckType(ushort id) {
+    return id == ID || Sprite::CheckType(id) || Inputtable::CheckType(id);
+}
+
 bool Character::IsOfType(ushort id) {
-    return id == ID || Sprite::IsOfType(id) || Inputtable::IsOfType(id);
+    return CheckType(id);
 }
 
 void Character::Create() {

@@ -1,8 +1,12 @@
 #include "BouncingBall.h"
 #include "templates.h"
 
+bool BouncingBall::CheckType(ushort id) {
+    return id == ID || Sprite::CheckType(id);
+}
+
 bool BouncingBall::IsOfType(ushort id) {
-    return id == ID || Sprite::IsOfType(id);
+    return CheckType(id);
 }
 
 void BouncingBall::Create() {

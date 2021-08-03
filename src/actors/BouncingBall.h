@@ -9,6 +9,7 @@ class BouncingBall : public virtual Sprite {
         Vector2i vel;
 
         using Sprite::Sprite;
+        static bool CheckType(ushort id);
         virtual bool IsOfType(ushort id);
 
         virtual void Create();

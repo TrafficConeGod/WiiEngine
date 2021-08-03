@@ -3,8 +3,12 @@
 #include "wii/io.h"
 #include "templates.h"
 
+bool Sprite::CheckType(ushort id) {
+	return id == ID || Actor::CheckType(id);
+}
+
 bool Sprite::IsOfType(ushort id) {
-	return id == ID || Actor::IsOfType(id);
+    return CheckType(id);
 }
 
 float texCoords[] = {

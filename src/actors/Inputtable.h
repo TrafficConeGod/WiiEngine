@@ -6,6 +6,7 @@ class Inputtable : public virtual Actor {
         static const ushort ID = 4;
 
         using Actor::Actor;
+        static bool CheckType(ushort id);
         virtual bool IsOfType(ushort id);
 
         virtual void ButtonPressed();

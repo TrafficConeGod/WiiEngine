@@ -4,8 +4,12 @@
 
 Actor::Actor(World* _world) : world{_world} {}
 
-bool Actor::IsOfType(ushort id) {
+bool Actor::CheckType(ushort id) {
     return id == ID;
+}
+
+bool Actor::IsOfType(ushort id) {
+    return CheckType(id);
 }
 
 void Actor::Load(DataStream& stream) {
