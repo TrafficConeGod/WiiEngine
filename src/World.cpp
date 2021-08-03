@@ -4,6 +4,12 @@
 #include "wii/io.h"
 #include "templates.h"
 
+World::~World() {
+    for (size_t i = 0; i < actors.size; i++) {
+        delete actors[i];
+    }
+}
+
 Actor* World::AllocateActor(ushort id) {
     Actor* actor;
     switch (id) {

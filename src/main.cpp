@@ -32,7 +32,7 @@ void ButtonPressedAction(Inputtable* inputtable) {
 	inputtable->ButtonPressed();
 }
 
-int main(int argc, char** argv){
+int main(int argc, char** argv) {
 	#ifndef PC_DEBUG
 
 	u32	frameBuf; 	// initial framebuffer index

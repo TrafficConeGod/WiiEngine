@@ -8,6 +8,8 @@ class World {
     private:
         Array<Actor*> actors;
     public:
+        ~World();
+
         Actor* AllocateActor(ushort id);
 
         Actor* LoadActor(DataStream& stream);
