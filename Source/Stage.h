@@ -4,11 +4,11 @@
 
 class Actor;
 
-class World {
+class Stage {
     private:
         Array<Actor*> actors;
     public:
-        ~World();
+        ~Stage();
 
         Actor* AllocateActor(ushort id);
 

@@ -2,7 +2,7 @@
 #include "Wii/io.h"
 #include "Wii/textures_tpl.h"
 #include "Wii/textures.h"
-#include "World.h"
+#include "Stage.h"
 #include "Actors/Sprite.h"
 #include "Actors/Inputtable.h"
 #include "Actors/BouncingBall.h"
@@ -125,12 +125,12 @@ int main(int argc, char** argv) {
 
 	#endif
 
-	World world;
+	Stage stage;
 	for (size_t i = 0; i < 1; i++) {
-		world.AllocateActor(BouncingBall::ID);
+		stage.AllocateActor(BouncingBall::ID);
 	}
-	world.AllocateActor(Character::ID);
-	world.DoAction(CreateAction);
+	stage.AllocateActor(Character::ID);
+	stage.DoAction(CreateAction);
 
 	while (true) {
 
@@ -143,7 +143,7 @@ int main(int argc, char** argv) {
 		}
 
 		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_A) {
-			world.DoActionOn(ButtonPressedAction);
+			stage.DoActionOn(ButtonPressedAction);
 		}
 
 		GX_SetViewport(0, 0, rMode->fbWidth, rMode->efbHeight, 0, 1);
@@ -160,8 +160,8 @@ int main(int argc, char** argv) {
 
 		#endif
 
-		world.DoAction(UpdateAction);
-		world.DoActionOn(DrawAction);
+		stage.DoAction(UpdateAction);
+		stage.DoActionOn(DrawAction);
 
 		#ifndef PC_DEBUG
 

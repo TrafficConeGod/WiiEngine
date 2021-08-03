@@ -2,7 +2,7 @@
 #include "Wii/mem.h"
 #include "Wii/io.h"
 
-Actor::Actor(World* _world) : world{_world} {}
+Actor::Actor(Stage* _stage) : stage{_stage} {}
 
 bool Actor::IsOfType(ushort id) {
     return id == ID;

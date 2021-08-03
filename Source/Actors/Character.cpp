@@ -1,7 +1,7 @@
 #include "Character.h"
 #include "templates.h"
 
-Character::Character(World* _world) : Sprite(_world), Inputtable(_world), Actor(_world) {}
+Character::Character(Stage* _stage) : Sprite(_stage), Inputtable(_stage), Actor(_stage) {}
 
 bool Character::IsOfType(ushort id) {
     return id == ID || Sprite::IsOfType(id) || Inputtable::IsOfType(id);

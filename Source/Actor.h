@@ -1,15 +1,15 @@
 #pragma once
 #include "Wii/type.h"
-#include "World.h"
+#include "Stage.h"
 #include "DataStream.h"
 
 class Actor {
     protected:
-        World* world;
+        Stage* stage;
     public:
         static const uint ID = 0;
 
-        Actor(World* world);
+        Actor(Stage* stage);
 
         virtual bool IsOfType(ushort id);
 

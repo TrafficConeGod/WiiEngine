@@ -1,16 +1,16 @@
-#include "World.h"
+#include "Stage.h"
 #include "Actors/BouncingBall.h"
 #include "Actors/Character.h"
 #include "Wii/io.h"
 #include "templates.h"
 
-World::~World() {
+Stage::~Stage() {
     for (size_t i = 0; i < actors.size; i++) {
         free(actors[i]);
     }
 }
 
-Actor* World::AllocateActor(ushort id) {
+Actor* Stage::AllocateActor(ushort id) {
     Actor* actor;
     switch (id) {
         case Actor::ID:
@@ -31,7 +31,7 @@ Actor* World::AllocateActor(ushort id) {
     return actor;
 }
 
-Actor* World::LoadActor(DataStream& stream) {
+Actor* Stage::LoadActor(DataStream& stream) {
     ushort id = 0;
     stream >> id;
 
@@ -41,13 +41,13 @@ Actor* World::LoadActor(DataStream& stream) {
     return actor;
 }
 
-void World::LoadActors(DataStream& stream) {
+void Stage::LoadActors(DataStream& stream) {
     while (stream.IsReadable()) {
         LoadActor(stream);
     }
 }
 
-void World::DoAction(void (*action)(Actor*)) {
+void Stage::DoAction(void (*action)(Actor*)) {
     for (size_t i = 0; i < actors.size; i++) {
         auto actor = actors[i];
         action(actor);
