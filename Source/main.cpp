@@ -1,7 +1,10 @@
 #include "debug.h"
 #include "Wii/io.h"
-#include "Wii/textures_tpl.h"
-#include "Wii/textures.h"
+#ifndef PC_DEBUG
+#include "../build/textures_tpl.h"
+#include "../build/textures.h"
+#endif
+#include "stageLinks.h"
 #include "Stage.h"
 #include "Actors/Sprite.h"
 #include "Actors/Inputtable.h"
@@ -125,10 +128,8 @@ int main(int argc, char** argv) {
 	#endif
 
 	Stage stage;
-	for (size_t i = 0; i < 1; i++) {
-		stage.AllocateActor(BouncingBall::ID);
-	}
-	stage.AllocateActor(Character::ID);
+	DataStream stream(MainStage.buf, MainStage.size);
+	stage.LoadActors(stream);
 	stage.DoAction(CreateAction);
 
 	while (true) {

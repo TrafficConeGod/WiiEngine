@@ -1,5 +1,5 @@
 Actor,,,
-Sprite,Actor,Position,Image
+Sprite,Actor,Vector2Int Position,Int Image
 Inputtable,Actor,,
 Character,"Sprite, Inputtable",,
-BouncingBall,,Position,Velocity
+BouncingBall,,Vector2Int Position,Vector2Int Velocity
