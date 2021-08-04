@@ -8,7 +8,7 @@ class Actor {
     protected:
         Stage* stage;
     public:
-        static const uint ID = 0;
+        static const uint ID = 1;
 
         Actor(Stage* stage);
 

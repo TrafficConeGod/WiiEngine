@@ -7,6 +7,7 @@ bool Sprite::IsOfType(ushort id) {
 }
 
 void Sprite::Load(DataStream& stream) {
+	Actor::Load(stream);
 	stream >> pos;
 	stream >> image;
 }

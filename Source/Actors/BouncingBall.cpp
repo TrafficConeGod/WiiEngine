@@ -4,10 +4,13 @@ bool BouncingBall::IsOfType(ushort id) {
     return id == ID || Sprite::IsOfType(id);
 }
 
+void BouncingBall::Load(DataStream& stream) {
+    stream >> pos;
+	stream >> vel;
+}
+
 void BouncingBall::Create() {
 	Sprite::Create();
-    pos = Vector2i(rand() % (640 - 32) << 8, rand() % (480 - 32) << 8);
-	vel = Vector2i((rand() & 0xFF) + 0x100, (rand() & 0xFF) + 0x100);
 	image = rand() & 3;
 
 	if (rand() & 1) {

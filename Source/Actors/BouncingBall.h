@@ -4,13 +4,14 @@
 
 class BouncingBall : public virtual Sprite {
     public:
-        static const ushort ID = 2;
+        static const ushort ID = 5;
 
         Vector2i vel;
 
         using Sprite::Sprite;
         virtual bool IsOfType(ushort id);
 
+        virtual void Load(DataStream& stream);
         virtual void Create();
         virtual void Update();
 };

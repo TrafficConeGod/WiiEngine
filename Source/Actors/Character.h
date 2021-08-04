@@ -2,9 +2,9 @@
 #include "Sprite.h"
 #include "Inputtable.h"
 
-class Character : public virtual Inputtable, public virtual Sprite {
+class Character : public virtual Sprite, public virtual Inputtable {
     public:
-        static const ushort ID = 3;
+        static const ushort ID = 4;
 
         Character(Stage* stage);
         virtual bool IsOfType(ushort id);

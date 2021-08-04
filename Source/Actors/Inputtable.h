@@ -3,7 +3,7 @@
 
 class Inputtable : public virtual Actor {
     public:
-        static const ushort ID = 4;
+        static const ushort ID = 3;
 
         using Actor::Actor;
         virtual bool IsOfType(ushort id);

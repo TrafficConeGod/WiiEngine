@@ -1,0 +1,2 @@
+Character,Position,"100, 100",Image,0
+BouncingBall,Position,"300, 300",Velocity,"10, 10"

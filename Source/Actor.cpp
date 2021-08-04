@@ -9,15 +9,10 @@ bool Actor::IsOfType(ushort id) {
     return id == ID;
 }
 
-void Actor::Load(DataStream& stream) {
-    
-}
+void Actor::Load(DataStream& stream) {}
 
-void Actor::Create() {
-}
+void Actor::Create() {}
 
-void Actor::Destroy() {
-}
+void Actor::Destroy() {}
 
-void Actor::Update() {
-}
+void Actor::Update() {}
