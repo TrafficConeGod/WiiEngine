@@ -1,5 +1,7 @@
 #pragma once
 
-#ifdef __linux__
-#define PC_DEBUG
+#define DEBUG_MODE
+
+#ifndef DEBUG_MODE
+#define GFX_MODE
 #endif

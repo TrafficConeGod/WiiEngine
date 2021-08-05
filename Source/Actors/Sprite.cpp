@@ -20,7 +20,7 @@ float texCoords[] = {
 };
 
 void Sprite::Draw() {
-	#ifndef PC_DEBUG
+	#ifdef GFX_MODE
 	const int width = 32;
 	const int height = 32;
 	int x = pos.x >> 8;

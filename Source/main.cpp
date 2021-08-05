@@ -1,6 +1,6 @@
 #include "debug.h"
 #include "Wii/io.h"
-#ifndef PC_DEBUG
+#ifdef GFX_MODE
 #include "../build/textures_tpl.h"
 #include "../build/textures.h"
 #endif
@@ -15,6 +15,7 @@
 
 static void* frameBuffer[2] = { NULL, NULL};
 static GXRModeObj* rMode;
+static void* xfb = NULL;
 
 GXTexObj texObj;
 
@@ -35,7 +36,7 @@ void ButtonPressedAction(Inputtable* inputtable) {
 }
 
 int main(int argc, char** argv) {
-	#ifndef PC_DEBUG
+	#ifdef GFX_MODE
 
 	u32	frameBuf; 	// initial framebuffer index
 	u32 firstFrame;
@@ -127,14 +128,54 @@ int main(int argc, char** argv) {
 
 	#endif
 
+	#ifdef DEBUG_MODE
+	// Initialise the video system
+	VIDEO_Init();
+
+	// This function initialises the attached controllers
+	WPAD_Init();
+
+	// Obtain the preferred video mode from the system
+	// This will correspond to the settings in the Wii menu
+	rMode = VIDEO_GetPreferredMode(NULL);
+
+	// Allocate memory for the display in the uncached region
+	xfb = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rMode));
+
+	// Initialise the console, required for printf
+	console_init(xfb,20,20,rMode->fbWidth,rMode->xfbHeight,rMode->fbWidth*VI_DISPLAY_PIX_SZ);
+
+	// Set up the video registers with the chosen mode
+	VIDEO_Configure(rMode);
+
+	// Tell the video hardware where our display memory is
+	VIDEO_SetNextFramebuffer(xfb);
+
+	// Make the display visible
+	VIDEO_SetBlack(FALSE);
+
+	// Flush the video register changes to the hardware
+	VIDEO_Flush();
+
+	// Wait for Video setup to complete
+	VIDEO_WaitVSync();
+	if(rMode->viTVMode&VI_NON_INTERLACE) VIDEO_WaitVSync();
+
+
+	// The console understands VT terminal escape codes
+	// This positions the cursor on row 2, column 0
+	// we can use variables for this with format codes too
+	// e.g. printf ("\x1b[%d;%dH", row, column );
+	printf("\x1b[2;0H");
+
+	#endif
+
 	Stage stage;
 	DataStream stream(MainStage.buf, MainStage.size);
 	stage.LoadActors(stream);
 	stage.DoAction(CreateAction);
 
 	while (true) {
-
-		#ifndef PC_DEBUG
 
 		WPAD_ScanPads();
 
@@ -145,6 +186,8 @@ int main(int argc, char** argv) {
 		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_A) {
 			stage.DoActionOn(ButtonPressedAction);
 		}
+
+		#ifdef GFX_MODE
 
 		GX_SetViewport(0, 0, rMode->fbWidth, rMode->efbHeight, 0, 1);
 		GX_InvVtxCache();
@@ -163,7 +206,7 @@ int main(int argc, char** argv) {
 		stage.DoAction(UpdateAction);
 		stage.DoActionOn(DrawAction);
 
-		#ifndef PC_DEBUG
+		#ifdef GFX_MODE
 
 		GX_DrawDone();
 
@@ -182,6 +225,10 @@ int main(int argc, char** argv) {
 		VIDEO_WaitVSync();
 		frameBuf ^= 1;		// flip framebuffer
 
+		#endif
+
+		#ifdef DEBUG_MODE
+		VIDEO_WaitVSync();
 		#endif
 	}
 	return 0;
