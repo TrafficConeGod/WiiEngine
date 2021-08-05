@@ -18,6 +18,8 @@ class DataStream {
         DataStream& operator>>(T& val);
 
         bool IsReadable();
+
+        void ResetHead();
 };
 
 #include "DataStream.inl"

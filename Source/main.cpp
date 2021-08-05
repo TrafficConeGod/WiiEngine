@@ -184,6 +184,8 @@ int main(int argc, char** argv) {
 
 		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_A) {
 			stage.DoActionOn(ButtonPressedAction);
+			stream.ResetHead();
+			stage.LoadActor(stream);
 		}
 
 		#ifdef GFX_MODE
