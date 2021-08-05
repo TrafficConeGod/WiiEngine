@@ -16,15 +16,13 @@ Actor* Stage::AllocateActor(ushort id) {
             actor = new Actor(this);
             break;
         case BouncingBall::ID:
-            actor = new BouncingBall(this);
+            actor = dynamic_cast<Actor*>(new BouncingBall(this));
             break;
         case Character::ID:
-            actor = new Character(this);
+            actor = dynamic_cast<Actor*>(new Character(this));
             break;
         default:
-            puts("Invalid actor id");
-            exit(0);
-            break;
+            return nullptr;
     }
     actors.Push(actor);
     return actor;
@@ -34,9 +32,10 @@ Actor* Stage::LoadActor(DataStream& stream) {
     ushort id = 0;
     stream >> id;
 
+    printf("Loaded Actor ID: %d\n", id);
+
     auto actor = AllocateActor(id);
     actor->Load(stream);
-    actors.Push(actor);
     return actor;
 }
 

@@ -167,7 +167,6 @@ int main(int argc, char** argv) {
 	// we can use variables for this with format codes too
 	// e.g. printf ("\x1b[%d;%dH", row, column );
 	printf("\x1b[2;0H");
-
 	#endif
 
 	Stage stage;
