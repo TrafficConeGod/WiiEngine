@@ -9,11 +9,11 @@ class Array {
 
         ~Array();
 
-        inline T& operator[](size_t index);
+        T& operator[](size_t index);
         T& SafeIndex(size_t index);
 
-        inline void Push(const T& val);
-        inline T Pop();
+        void Push(const T& val);
+        T Pop();
 };
 
 #include "Array.inl"
