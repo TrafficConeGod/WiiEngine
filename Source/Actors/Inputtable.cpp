@@ -5,7 +5,7 @@ bool Inputtable::IsOfType(ushort id) {
 }
 
 void Inputtable::ButtonPressed() {
-	puts("Pressed");
+	
 }
 
 void Inputtable::ButtonReleased() {

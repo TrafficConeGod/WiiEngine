@@ -11,6 +11,13 @@
 #include "Actors/BouncingBall.h"
 #include "Actors/Character.h"
 
+void error(const char* msg) {
+	#ifdef DEBUG
+	puts(msg);
+	#endif
+	for (;;) {}
+}
+
 #define DEFAULT_FIFO_SIZE (256*1024)
 
 static void* frameBuffer[2] = { NULL, NULL};
