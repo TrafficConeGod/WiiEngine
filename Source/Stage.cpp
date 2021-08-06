@@ -4,6 +4,7 @@
 #include "Wii/io.h"
 
 Stage::~Stage() {
+    Destroy();
     for (size_t i = 0; i < actors.size; i++) {
         free(actors[i]);
     }
@@ -46,9 +47,24 @@ void Stage::LoadActors(DataStream& stream) {
     }
 }
 
-void Stage::DoAction(void (*action)(Actor*)) {
+void Stage::Initialize() {
     for (size_t i = 0; i < actors.size; i++) {
         auto actor = actors[i];
-        action(actor);
+        actor->Initialize();
+    }
+}
+
+void DestroyAction(Actor* actor) {
+    actor->Destroy();
+}
+
+void Stage::Destroy() {
+    UseActors(DestroyAction);
+}
+
+void Stage::UseActors(void (*func)(Actor*)) {
+    for (size_t i = 0; i < actors.size; i++) {
+        auto actor = actors[i];
+        actor->Use(func);
     }
 }

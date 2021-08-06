@@ -15,9 +15,11 @@ class Stage {
         Actor* LoadActor(DataStream& stream);
         void LoadActors(DataStream& stream);
 
-        void DoAction(void (*action)(Actor*));
+        void Initialize();
+        void Destroy();
+        void UseActors(void (*action)(Actor*));
         template<typename T>
-        void DoActionOn(void (*action)(T*));
+        void UseActorsOf(void (*action)(T*));
 };
 
 #include "Stage.inl"

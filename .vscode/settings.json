@@ -10,12 +10,17 @@
         "*.toast": "objective-c",
         "*.txt": "python",
         "*.tt": "cpp",
+        "*.scf": "xml",
         "*.tcc": "cpp",
         "iomanip": "cpp",
         "istream": "cpp",
         "ostream": "cpp",
         "tpl.h": "c",
         "textures.h": "c",
-        "textures_tpl.h": "c"
+        "textures_tpl.h": "c",
+        "memory": "cpp",
+        "sstream": "cpp",
+        "streambuf": "cpp",
+        "functional": "cpp"
     }
 }

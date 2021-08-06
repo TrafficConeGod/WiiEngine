@@ -18,8 +18,8 @@ static void* xfb = NULL;
 
 GXTexObj texObj;
 
-void CreateAction(Actor* actor) {
-	actor->Create();
+void InitializeAction(Actor* actor) {
+	actor->Initialize();
 }
 
 void UpdateAction(Actor* actor) {
@@ -171,7 +171,7 @@ int main(int argc, char** argv) {
 	Stage stage;
 	DataStream stream(MainStage.buf, MainStage.size);
 	stage.LoadActors(stream);
-	stage.DoAction(CreateAction);
+	stage.Initialize();
 
 	while (true) {
 
@@ -182,10 +182,10 @@ int main(int argc, char** argv) {
 		}
 
 		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_A) {
-			stage.DoActionOn(ButtonPressedAction);
+			stage.UseActorsOf(ButtonPressedAction);
 			stream.ResetHead();
 			Actor* actor = stage.LoadActor(stream);
-			actor->Create();
+			actor->Initialize();
 		}
 
 		#ifdef GFX_MODE
@@ -204,8 +204,8 @@ int main(int argc, char** argv) {
 
 		#endif
 
-		stage.DoAction(UpdateAction);
-		stage.DoActionOn(DrawAction);
+		stage.UseActors(UpdateAction);
+		stage.UseActorsOf(DrawAction);
 
 		#ifdef GFX_MODE
 
