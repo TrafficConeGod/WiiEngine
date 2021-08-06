@@ -2,7 +2,6 @@
 #include "Actors/BouncingBall.h"
 #include "Actors/Character.h"
 #include "Wii/io.h"
-#include "debug.h"
 
 Stage::~Stage() {
     for (size_t i = 0; i < actors.size; i++) {
@@ -23,7 +22,7 @@ Actor* Stage::AllocateActor(ushort id) {
             actor = dynamic_cast<Actor*>(new Character(this));
             break;
         default:
-            error("Invalid Actor ID");
+            Error("Invalid Actor ID");
             return nullptr;
     }
     actors.Push(actor);
@@ -34,7 +33,7 @@ Actor* Stage::LoadActor(DataStream& stream) {
     ushort id = 0;
     stream >> id;
 
-    // printf("Loaded Actor ID: %d\n", id);
+    PrintFmt("Loaded Actor ID: %d\n", id);
 
     auto actor = AllocateActor(id);
     actor->Load(stream);

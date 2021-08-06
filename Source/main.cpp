@@ -1,4 +1,3 @@
-#include "debug.h"
 #include "Wii/io.h"
 #ifdef GFX_MODE
 #include "../build/textures_tpl.h"
@@ -10,13 +9,6 @@
 #include "Actors/Inputtable.h"
 #include "Actors/BouncingBall.h"
 #include "Actors/Character.h"
-
-void error(const char* msg) {
-	#ifdef DEBUG
-	puts(msg);
-	#endif
-	for (;;) {}
-}
 
 #define DEFAULT_FIFO_SIZE (256*1024)
 
@@ -173,7 +165,7 @@ int main(int argc, char** argv) {
 	// This positions the cursor on row 2, column 0
 	// we can use variables for this with format codes too
 	// e.g. printf ("\x1b[%d;%dH", row, column );
-	printf("\x1b[2;0H");
+	PrintFmt("\x1b[2;0H");
 	#endif
 
 	Stage stage;

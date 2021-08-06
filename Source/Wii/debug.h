@@ -5,5 +5,3 @@
 #ifndef DEBUG_MODE
 #define GFX_MODE
 #endif
-
-void error(const char* msg);

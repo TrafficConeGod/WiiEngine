@@ -1,4 +1,4 @@
-#include "debug.h"
+#include "Wii/io.h"
 #include "Array.h"
 
 template<typename T>
@@ -16,7 +16,7 @@ T& Array<T>::operator[](size_t index) {
 template<typename T>
 T& Array<T>::SafeIndex(size_t index) {
     if (index >= size) {
-        error("Out of bounds");
+        Error("Out of bounds");
         exit(0);
     }
     return buf[index];

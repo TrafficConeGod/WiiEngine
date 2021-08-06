@@ -1,4 +1,3 @@
-#include "debug.h"
 #include "Sprite.h"
 #include "Wii/io.h"
 
