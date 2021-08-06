@@ -30,7 +30,7 @@ Actor* Stage::AllocateActor(ushort id) {
             Error("Invalid Actor ID");
             return nullptr;
     }
-    actors.Push(actor);
+    actors << actor;
     return actor;
 }
 

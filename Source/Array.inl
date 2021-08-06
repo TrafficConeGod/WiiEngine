@@ -23,16 +23,17 @@ T& Array<T>::SafeIndex(size_t index) {
 }
 
 template<typename T>
-void Array<T>::Push(const T& val) {
+Array<T>& Array<T>::operator<<(const T& val) {
     size += 1;
     buf = (T*)realloc(buf, size * sizeof(T));
     buf[size - 1] = val;
+    return *this;
 }
 
 template<typename T>
-T Array<T>::Pop() {
+Array<T>& Array<T>::operator>>(T& val) {
     size -= 1;
-    T val = buf[size];
+    val = buf[size];
     realloc(buf, size * sizeof(T));
-    return val;
+    return *this;
 }

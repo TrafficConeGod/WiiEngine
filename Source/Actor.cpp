@@ -19,13 +19,13 @@ void Actor::Use(void (*func)(Actor*)) {
 Actor* Actor::CreateChild(ushort id) {
     Actor* actor = stage->AllocateActor(id);
     actor->Initialize();
-    children.Push(actor);
+    children << actor;
 }
 
 Actor* Actor::CreateChildFrom(DataStream& stream) {
     Actor* actor = stage->LoadActor(stream);
     actor->Initialize();
-    children.Push(actor);
+    children << actor;
 }
 
 Actor::Actor(Stage* _stage) : stage{_stage} {}

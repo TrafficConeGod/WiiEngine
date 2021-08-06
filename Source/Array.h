@@ -12,8 +12,8 @@ class Array {
         T& operator[](size_t index);
         T& SafeIndex(size_t index);
 
-        void Push(const T& val);
-        T Pop();
+        Array& operator<<(const T& val);
+        Array& operator>>(T& val);
 };
 
 #include "Array.inl"

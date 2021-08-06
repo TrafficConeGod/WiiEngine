@@ -21,6 +21,8 @@
         "memory": "cpp",
         "sstream": "cpp",
         "streambuf": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "*.d": "cpp",
+        "*.o": "cpp"
     }
 }
