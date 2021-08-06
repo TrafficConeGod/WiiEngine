@@ -3,6 +3,9 @@
 
 template<typename T>
 T* DataStream::PtrAtPos() {
+    if (pos + sizeof(T) > size) {
+        Error("Attempt to index out of DataStream bounds");
+    }
     return (T*)((intptr_t)buf + pos);
 }
 
