@@ -171,6 +171,7 @@ int main(int argc, char** argv) {
 	Stage stage;
 	DataStream stream(MainStage.buf, MainStage.size);
 	stage.LoadActors(stream);
+
 	stage.Initialize();
 
 	while (true) {
@@ -183,9 +184,6 @@ int main(int argc, char** argv) {
 
 		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_A) {
 			stage.UseActorsOf(ButtonPressedAction);
-			stream.ResetHead();
-			Actor* actor = stage.LoadActor(stream);
-			actor->Initialize();
 		}
 
 		#ifdef GFX_MODE

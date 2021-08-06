@@ -3,12 +3,6 @@
 #include "Wii/mem.h"
 #include "Wii/io.h"
 
-void Actor::Use(void (*func)(Actor*)) {
-    if (alive) {
-        func(this);
-    }
-}
-
 void Actor::Initialize() {
     if (!initialized) {
         initialized = true;
@@ -16,9 +10,21 @@ void Actor::Initialize() {
     }
 }
 
+void Actor::Use(void (*func)(Actor*)) {
+    if (initialized && alive) {
+        func(this);
+    }
+}
+
 Actor* Actor::CreateChild(ushort id) {
     Actor* actor = stage->AllocateActor(id);
-    actor->Create();
+    actor->Initialize();
+    children.Push(actor);
+}
+
+Actor* Actor::CreateChildFrom(DataStream& stream) {
+    Actor* actor = stage->LoadActor(stream);
+    actor->Initialize();
     children.Push(actor);
 }
 

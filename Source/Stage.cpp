@@ -1,6 +1,7 @@
 #include "Stage.h"
 #include "Actors/BouncingBall.h"
 #include "Actors/Character.h"
+#include "Actors/BouncingBallGenerator.h"
 #include "Wii/io.h"
 
 Stage::~Stage() {
@@ -21,6 +22,9 @@ Actor* Stage::AllocateActor(ushort id) {
             break;
         case Character::ID:
             actor = dynamic_cast<Actor*>(new Character(this));
+            break;
+        case BouncingBallGenerator::ID:
+            actor = dynamic_cast<Actor*>(new BouncingBallGenerator(this));
             break;
         default:
             Error("Invalid Actor ID");

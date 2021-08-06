@@ -5,7 +5,3 @@ DataStream::DataStream(void* _buf, size_t _size) : buf{_buf}, size{_size} {}
 bool DataStream::IsReadable() {
     return pos < size;
 }
-
-void DataStream::ResetHead() {
-    pos = 0;
-}
