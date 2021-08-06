@@ -10,5 +10,5 @@ class Character : public virtual Sprite, public virtual Inputtable {
         virtual bool IsOfType(ushort id);
 
         virtual void Create();
-        virtual void ButtonPressed();
+        virtual void ButtonPressed(uint buttonType);
 };

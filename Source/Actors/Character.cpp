@@ -12,7 +12,9 @@ void Character::Create() {
 	image = 0;
 }
 
-void Character::ButtonPressed() {
-    Inputtable::ButtonPressed();
-    pos = Vector2i(30000, 30000);
+void Character::ButtonPressed(uint buttonType) {
+    if (buttonType & WPAD_BUTTON_2) {
+        Inputtable::ButtonPressed(buttonType);
+        pos = Vector2i(30000, 30000);
+    }
 }

@@ -12,7 +12,9 @@
 
 #define DEFAULT_FIFO_SIZE (256*1024)
 
+#ifdef GFX_MODE
 static void* frameBuffer[2] = { NULL, NULL};
+#endif
 static GXRModeObj* rMode;
 #ifdef DEBUG_MODE
 static void* xfb = NULL;
@@ -33,7 +35,7 @@ void DrawAction(Sprite* sprite) {
 }
 
 void ButtonPressedAction(Inputtable* inputtable) {
-	inputtable->ButtonPressed();
+	inputtable->ButtonPressed(WPAD_ButtonsDown(0));
 }
 
 int main(int argc, char** argv) {
@@ -184,7 +186,7 @@ int main(int argc, char** argv) {
 			exit(0);
 		}
 
-		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_A) {
+		if (WPAD_ButtonsDown(0)) {
 			stage.UseActorsOf(ButtonPressedAction);
 		}
 

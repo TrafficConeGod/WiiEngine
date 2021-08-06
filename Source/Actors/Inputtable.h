@@ -8,6 +8,6 @@ class Inputtable : public virtual Actor {
         using Actor::Actor;
         virtual bool IsOfType(ushort id);
 
-        virtual void ButtonPressed();
+        virtual void ButtonPressed(uint buttonType);
         virtual void ButtonReleased();
 };

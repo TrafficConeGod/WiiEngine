@@ -6,5 +6,5 @@ class BouncingBallGenerator : public Inputtable {
         static const ushort ID = 6;
 
         using Inputtable::Inputtable;
-        virtual void ButtonPressed();
+        virtual void ButtonPressed(uint buttonType);
 };
