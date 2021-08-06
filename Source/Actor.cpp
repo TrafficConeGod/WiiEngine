@@ -20,12 +20,14 @@ Actor* Actor::CreateChild(ushort id) {
     Actor* actor = stage->AllocateActor(id);
     actor->Initialize();
     children << actor;
+    return actor;
 }
 
 Actor* Actor::CreateChildFrom(DataStream& stream) {
     Actor* actor = stage->LoadActor(stream);
     actor->Initialize();
     children << actor;
+    return actor;
 }
 
 Actor::Actor(Stage* _stage) : stage{_stage} {}

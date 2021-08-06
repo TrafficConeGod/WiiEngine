@@ -14,7 +14,9 @@
 
 static void* frameBuffer[2] = { NULL, NULL};
 static GXRModeObj* rMode;
+#ifdef DEBUG_MODE
 static void* xfb = NULL;
+#endif
 
 GXTexObj texObj;
 

@@ -1,8 +1,9 @@
 #include "DataStream.h"
+#include <stdlib.h>
 
 template<typename T>
 T* DataStream::PtrAtPos() {
-    return (T*)(buf + pos);
+    return (T*)((intptr_t)buf + pos);
 }
 
 template<typename T>
