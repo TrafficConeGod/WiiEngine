@@ -10,6 +10,7 @@ void BouncingBall::Load(DataStream& stream) {
 }
 
 void BouncingBall::Create() {
+	PrintFmt("Bouncing ball load%d\n", rand());
 	Sprite::Create();
 	image = rand() & 3;
 

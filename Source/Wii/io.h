@@ -9,8 +9,6 @@
 #include <wiiuse/wpad.h>
 #include <ogc/tpl.h>
 
-inline void Error(const char* msg);
-inline void Print(const char* msg);
-inline void PrintFmt(const char* fmt...);
-
-#include "io.inl"
+void Error(const char* msg);
+void Print(const char* msg);
+void PrintFmt(const char* fmt...);

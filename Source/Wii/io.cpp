@@ -1,6 +1,6 @@
 #include "io.h"
 
-inline void Error(const char* msg) {
+void Error(const char* msg) {
     #ifdef DEBUG_MODE
     puts("ERROR: ");
     puts(msg);
@@ -8,13 +8,13 @@ inline void Error(const char* msg) {
     for (;;) {}
 }
 
-inline void Print(const char* msg) {
+void Print(const char* msg) {
     #ifdef DEBUG_MODE
     puts(msg);
     #endif
 }
 
-inline void PrintFmt(const char* fmt...) {
+void PrintFmt(const char* fmt...) {
     #ifdef DEBUG_MODE
     printf(fmt);
     #endif
