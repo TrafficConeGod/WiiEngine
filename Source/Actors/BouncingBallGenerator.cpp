@@ -2,6 +2,7 @@
 #include "stageLinks.h"
 
 void BouncingBallGenerator::ButtonPressed(uint buttonType) {
+    Inputtable::ButtonPressed(buttonType);
     if (buttonType & WPAD_BUTTON_A) {
         DataStream stream(MainStage.buf, MainStage.size);
         CreateChildFrom(stream);

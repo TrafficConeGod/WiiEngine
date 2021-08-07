@@ -14,9 +14,6 @@ Stage::~Stage() {
 Actor* Stage::AllocateActor(ushort id) {
     Actor* actor;
     switch (id) {
-        case Actor::ID:
-            actor = new Actor(this);
-            break;
         case BouncingBall::ID:
             actor = dynamic_cast<Actor*>(new BouncingBall(this));
             break;
