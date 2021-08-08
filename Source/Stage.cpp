@@ -4,6 +4,10 @@
 #include "Actors/BouncingBallGenerator.h"
 #include "Wii/io.h"
 
+#define ActorCase(T) case T::ID: \
+actor = dynamic_cast<Actor*>(new T(this)); \
+break
+
 Stage::~Stage() {
     Destroy();
     for (size_t i = 0; i < actors.size; i++) {
@@ -14,15 +18,9 @@ Stage::~Stage() {
 Actor* Stage::AllocateActor(ushort id) {
     Actor* actor;
     switch (id) {
-        case BouncingBall::ID:
-            actor = dynamic_cast<Actor*>(new BouncingBall(this));
-            break;
-        case Character::ID:
-            actor = dynamic_cast<Actor*>(new Character(this));
-            break;
-        case BouncingBallGenerator::ID:
-            actor = dynamic_cast<Actor*>(new BouncingBallGenerator(this));
-            break;
+        ActorCase(BouncingBall);
+        ActorCase(Character);
+        ActorCase(BouncingBallGenerator);
         default:
             Error("Invalid Actor ID");
             return nullptr;
