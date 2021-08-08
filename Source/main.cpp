@@ -1,7 +1,7 @@
 #include "Wii/io.h"
 #ifdef GFX_MODE
-#include "../build/textures_tpl.h"
-#include "../build/textures.h"
+#include "../Build/textures_tpl.h"
+#include "../Build/textures.h"
 #endif
 #include "stageLinks.h"
 #include "Stage.h"
@@ -9,6 +9,17 @@
 #include "Actors/Inputtable.h"
 #include "Actors/BouncingBall.h"
 #include "Actors/Character.h"
+
+
+#include <fat.h>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #define DEFAULT_FIFO_SIZE (256*1024)
 
@@ -173,10 +184,40 @@ int main(int argc, char** argv) {
 	#endif
 
 	Stage stage;
-	DataStream stream(MainStage.buf, MainStage.size);
-	stage.LoadActors(stream);
 
-	stage.Initialize();
+	if (!fatInitDefault()) {
+		Error("fatInitDefault failure: terminating");
+	}
+	
+	DIR *d;
+	struct dirent *dir;
+	d = opendir("/");
+	if (d) {
+		while ((dir = readdir(d)) != NULL) {
+			PrintFmt("%s\n", dir->d_name);
+		}
+		closedir(d);
+	} else {
+		Error("Dirnotfound");
+	}
+
+	Error("EXIT");
+
+	if (access("./Stages/Stage1.stg", F_OK) != 0) {
+		Error("Couldnt access file");
+	}
+	FILE* file = fopen("./Stages/Stage1.stg", "rb");
+
+	fseek(file, 0L, SEEK_END);
+	size_t size = ftell(file);
+	rewind(file);
+	char buf[size];
+	fgets(buf, size, file);
+
+	// DataStream stream(buf, size);
+	// stage.LoadActors(stream);
+
+	// stage.Initialize();
 
 	while (true) {
 

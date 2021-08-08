@@ -1,6 +1,8 @@
-build
+Build
+Image
 *.dol
 *.elf
+*.iso
 Stages/*.cpp
 .vscode
 callgrind.*
