@@ -5,7 +5,12 @@ void Error(const char* msg) {
     puts("ERROR: ");
     puts(msg);
     #endif
-    for (;;) {}
+    for (;;) {
+		WPAD_ScanPads();
+        if (WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) {
+			exit(0);
+		}
+    }
 }
 
 void Print(const char* msg) {
