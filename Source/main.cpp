@@ -1,3 +1,6 @@
+#include <ogc/ios.h>
+#include <ogc/machine/processor.h>
+
 #include "Wii/io.h"
 #ifdef GFX_MODE
 #include "../Build/textures_tpl.h"
@@ -10,7 +13,8 @@
 #include "Actors/BouncingBall.h"
 #include "Actors/Character.h"
 
-
+#include <di/di.h>
+#include <ogc/ios.h>
 #include <fat.h>
 
 #include <stdio.h>
@@ -49,7 +53,7 @@ void ButtonPressedAction(Inputtable* inputtable) {
 	inputtable->ButtonPressed(WPAD_ButtonsDown(0));
 }
 
-int main(int argc, char** argv) {
+int main(int argCount, char** args) {
 	#ifdef GFX_MODE
 
 	u32	frameBuf; 	// initial framebuffer index
@@ -183,97 +187,111 @@ int main(int argc, char** argv) {
 	PrintFmt("\x1b[2;0H");
 	#endif
 
-	Stage stage;
+	Print("\n\nInitializing");
 
-	if (!fatInitDefault()) {
-		Error("fatInitDefault failure: terminating");
+	if (IOS_GetVersion() != 58) {
+		IOS_ReloadIOS(58);
 	}
-	
-	DIR *d;
-	struct dirent *dir;
-	d = opendir("/");
-	if (d) {
-		while ((dir = readdir(d)) != NULL) {
-			PrintFmt("%s\n", dir->d_name);
+
+	if (IOS_GetVersion() == 58) {
+		DI_LoadDVDX(false);
+		DI_Init();
+	}
+
+	char buf[2048];
+
+	DI_UnencryptedRead(buf, 2048, 0);
+
+	for (size_t i = 0; i < 2048; i++) {
+		char ch = buf[i];
+		if (ch == 0) {
+			continue;
 		}
-		closedir(d);
-	} else {
-		Error("Dirnotfound");
+		PrintFmt("%c", ch);
 	}
+	Print("");
 
-	Error("EXIT");
+	// ListDir("dvd:/");
 
-	if (access("./Stages/Stage1.stg", F_OK) != 0) {
-		Error("Couldnt access file");
-	}
-	FILE* file = fopen("./Stages/Stage1.stg", "rb");
+	Error("EndProgram");
 
-	fseek(file, 0L, SEEK_END);
-	size_t size = ftell(file);
-	rewind(file);
-	char buf[size];
-	fgets(buf, size, file);
+	// PrintFmt("%d\n", argCount);
+	
+	// Error("ErrrorLOop");
+
+	// if (access("./Stages/Stage1.stg", F_OK) != 0) {
+	// 	Error("Couldnt access file");
+	// }
+	// FILE* file = fopen("/Stages/Stage1.stg", "rb");
+
+	// fseek(file, 0L, SEEK_END);
+	// size_t size = ftell(file);
+	// rewind(file);
+	// char buf[size];
+	// fgets(buf, size, file);
+
+	// Stage stage;
 
 	// DataStream stream(buf, size);
 	// stage.LoadActors(stream);
 
 	// stage.Initialize();
 
-	while (true) {
+	// while (true) {
 
-		WPAD_ScanPads();
+		// WPAD_ScanPads();
 
-		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) {
-			exit(0);
-		}
+	// 	if (WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) {
+	// 		exit(0);
+	// 	}
 
-		if (WPAD_ButtonsDown(0)) {
-			stage.UseActorsOf(ButtonPressedAction);
-		}
+	// 	if (WPAD_ButtonsDown(0)) {
+	// 		stage.UseActorsOf(ButtonPressedAction);
+	// 	}
 
-		#ifdef GFX_MODE
+	// 	#ifdef GFX_MODE
 
-		GX_SetViewport(0, 0, rMode->fbWidth, rMode->efbHeight, 0, 1);
-		GX_InvVtxCache();
-		GX_InvalidateTexAll();
+	// 	GX_SetViewport(0, 0, rMode->fbWidth, rMode->efbHeight, 0, 1);
+	// 	GX_InvVtxCache();
+	// 	GX_InvalidateTexAll();
 
-		GX_ClearVtxDesc();
-		GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
-		GX_SetVtxDesc(GX_VA_TEX0, GX_DIRECT);
+	// 	GX_ClearVtxDesc();
+	// 	GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
+	// 	GX_SetVtxDesc(GX_VA_TEX0, GX_DIRECT);
 
-		guMtxIdentity(GXmodelView2D);
-		guMtxTransApply(GXmodelView2D, GXmodelView2D, 0.0F, 0.0F, -5.0F);
-		GX_LoadPosMtxImm(GXmodelView2D, GX_PNMTX0);
+	// 	guMtxIdentity(GXmodelView2D);
+	// 	guMtxTransApply(GXmodelView2D, GXmodelView2D, 0.0F, 0.0F, -5.0F);
+	// 	GX_LoadPosMtxImm(GXmodelView2D, GX_PNMTX0);
 
-		#endif
+	// 	#endif
 
-		stage.UseActors(UpdateAction);
-		stage.UseActorsOf(DrawAction);
+	// 	stage.UseActors(UpdateAction);
+	// 	stage.UseActorsOf(DrawAction);
 
-		#ifdef GFX_MODE
+	// 	#ifdef GFX_MODE
 
-		GX_DrawDone();
+	// 	GX_DrawDone();
 
-		GX_SetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-		GX_SetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
-		GX_SetAlphaUpdate(GX_TRUE);
-		GX_SetColorUpdate(GX_TRUE);
-		GX_CopyDisp(frameBuffer[frameBuf], GX_TRUE);
+	// 	GX_SetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
+	// 	GX_SetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
+	// 	GX_SetAlphaUpdate(GX_TRUE);
+	// 	GX_SetColorUpdate(GX_TRUE);
+	// 	GX_CopyDisp(frameBuffer[frameBuf], GX_TRUE);
 
-		VIDEO_SetNextFramebuffer(frameBuffer[frameBuf]);
-		if (firstFrame) {
-			VIDEO_SetBlack(FALSE);
-			firstFrame = 0;
-		}
-		VIDEO_Flush();
-		VIDEO_WaitVSync();
-		frameBuf ^= 1;		// flip framebuffer
+	// 	VIDEO_SetNextFramebuffer(frameBuffer[frameBuf]);
+	// 	if (firstFrame) {
+	// 		VIDEO_SetBlack(FALSE);
+	// 		firstFrame = 0;
+	// 	}
+	// 	VIDEO_Flush();
+	// 	VIDEO_WaitVSync();
+	// 	frameBuf ^= 1;		// flip framebuffer
 
-		#endif
+	// 	#endif
 
-		#ifdef DEBUG_MODE
-		VIDEO_WaitVSync();
-		#endif
-	}
+	// 	#ifdef DEBUG_MODE
+	// 	VIDEO_WaitVSync();
+	// 	#endif
+	// }
 	return 0;
 }

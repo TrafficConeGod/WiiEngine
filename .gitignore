@@ -4,5 +4,5 @@ Image
 *.elf
 *.iso
 Stages/*.cpp
-.vscode
+*.json
 callgrind.*
