@@ -1,7 +1,5 @@
-#include <ogc/ios.h>
-#include <ogc/machine/processor.h>
-
 #include "Wii/io.h"
+#include "Wii/disc.h"
 #ifdef GFX_MODE
 #include "../Build/textures_tpl.h"
 #include "../Build/textures.h"
@@ -198,11 +196,23 @@ int main(int argCount, char** args) {
 		DI_Init();
 	}
 
-	char buf[2048];
+	DiscHeader header;
+	DI_UnencryptedRead(&header, sizeof(DiscHeader), 0);
 
-	DI_UnencryptedRead(buf, 2048, 0);
+	// DiscPartitions partitions;
+	// DI_UnencryptedRead(&partitions, sizeof(DiscPartitions), 0x40000);
 
-	for (size_t i = 0; i < 2048; i++) {
+	// uintptr_t partitionInfoTableOffset = partitions.partitionInfoTableOffset << 2;
+	// DiscPartitionInfoTable partitionInfoTable;
+	// DI_UnencryptedRead(&partitionInfoTable, sizeof(DiscPartitionInfoTable), partitionInfoTableOffset);
+
+	// uintptr_t partitionOffset = partitionInfoTable.partitionOffset << 2;
+	// DiscPartition partition;
+	// DI_UnencryptedRead(&partition, sizeof(DiscPartition), partitionOffset);
+
+	PrintFmt("%d\n", sizeof(DiscHeader));
+	auto buf = (char*)&header;
+	for (size_t i = 0; i < sizeof(DiscHeader); i++) {
 		char ch = buf[i];
 		if (ch == 0) {
 			continue;
@@ -210,8 +220,6 @@ int main(int argCount, char** args) {
 		PrintFmt("%c", ch);
 	}
 	Print("");
-
-	// ListDir("dvd:/");
 
 	Error("EndProgram");
 
