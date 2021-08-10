@@ -4,6 +4,14 @@
 #include "Actors/BouncingBallGenerator.h"
 #include "Wii/io.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 #define ActorCase(T) case T::ID: \
 actor = dynamic_cast<Actor*>(new T(this)); \
 break
@@ -44,6 +52,25 @@ void Stage::LoadActors(DataStream& stream) {
     while (stream.IsReadable()) {
         LoadActor(stream);
     }
+}
+
+bool Stage::LoadFromFile(const char* path) {
+    if (access(path, F_OK) != 0) {
+        Print("File not found");
+		return false;
+	}
+
+	FILE* file = fopen(path, "rb");
+
+	fseek(file, 0L, SEEK_END);
+	size_t size = ftell(file);
+	rewind(file);
+	char buf[size];
+	fgets(buf, size, file);
+
+	DataStream stream(buf, size);
+	LoadActors(stream);
+    return true;
 }
 
 void Stage::Initialize() {

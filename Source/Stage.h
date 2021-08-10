@@ -14,6 +14,7 @@ class Stage {
 
         Actor* LoadActor(DataStream& stream);
         void LoadActors(DataStream& stream);
+        bool LoadFromFile(const char* path);
 
         void Initialize();
         void Destroy();

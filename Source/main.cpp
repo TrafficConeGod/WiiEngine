@@ -212,22 +212,8 @@ int main(int argCount, char** args) {
 		Error("fatInitDefault() failed");
 	}
 
-	if (access("Data/Stages/Stage1.stg", F_OK) != 0) {
-		Error("Couldnt access file");
-	}
-	FILE* file = fopen("Data/Stages/Stage1.stg", "rb");
-
-	fseek(file, 0L, SEEK_END);
-	size_t size = ftell(file);
-	rewind(file);
-	char buf[size];
-	fgets(buf, size, file);
-
 	Stage stage;
-
-	DataStream stream(buf, size);
-	stage.LoadActors(stream);
-
+	stage.LoadFromFile("Data/Stages/Stage1.stg");
 	stage.Initialize();
 
 	while (true) {
