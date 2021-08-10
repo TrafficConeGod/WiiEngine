@@ -1,1 +1,1 @@
-dolphin-emu -e WiiEngine.iso
+dolphin-emu -e WiiEngine.dol

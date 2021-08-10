@@ -1,18 +1,14 @@
 #include "Wii/io.h"
-#include "Wii/disc.h"
 #ifdef GFX_MODE
 #include "../Build/textures_tpl.h"
 #include "../Build/textures.h"
 #endif
-#include "stageLinks.h"
 #include "Stage.h"
 #include "Actors/Sprite.h"
 #include "Actors/Inputtable.h"
 #include "Actors/BouncingBall.h"
 #include "Actors/Character.h"
 
-#include <di/di.h>
-#include <ogc/ios.h>
 #include <fat.h>
 
 #include <stdio.h>
@@ -49,6 +45,33 @@ void DrawAction(Sprite* sprite) {
 
 void ButtonPressedAction(Inputtable* inputtable) {
 	inputtable->ButtonPressed(WPAD_ButtonsDown(0));
+}
+
+void ListDir(const char* path) {
+	DIR* dir = opendir(path);
+	if (!dir) {
+		Print("No Directory");
+		return;
+	}
+
+	PrintFmt("Listing: %s\n", path);
+
+	struct dirent* entry;
+
+	while ((entry = readdir(dir)) != NULL) {
+		if (entry->d_name[0] == '.' && (entry->d_name[1] == '\0' || (entry->d_name[1] == '.' && entry->d_name[2] == '\0'))) {
+			continue;
+		}
+		
+		struct stat entryStat;
+		stat(entry->d_name, &entryStat);
+
+		if (S_ISDIR(entryStat.st_mode)) {
+			PrintFmt("Directory: %s\n", entry->d_name);
+		} else {
+			PrintFmt("File: %s\n", entry->d_name);
+		}
+	}
 }
 
 int main(int argCount, char** args) {
@@ -185,121 +208,83 @@ int main(int argCount, char** args) {
 	PrintFmt("\x1b[2;0H");
 	#endif
 
-	Print("\n\nInitializing");
-
-	if (IOS_GetVersion() != 58) {
-		IOS_ReloadIOS(58);
+	if (!fatInitDefault()) {
+		Error("fatInitDefault() failed");
 	}
 
-	if (IOS_GetVersion() == 58) {
-		DI_LoadDVDX(false);
-		DI_Init();
+	if (access("Data/Stages/Stage1.stg", F_OK) != 0) {
+		Error("Couldnt access file");
 	}
+	FILE* file = fopen("Data/Stages/Stage1.stg", "rb");
 
-	DiscHeader header;
-	DI_UnencryptedRead(&header, sizeof(DiscHeader), 0);
+	fseek(file, 0L, SEEK_END);
+	size_t size = ftell(file);
+	rewind(file);
+	char buf[size];
+	fgets(buf, size, file);
 
-	// DiscPartitions partitions;
-	// DI_UnencryptedRead(&partitions, sizeof(DiscPartitions), 0x40000);
+	Stage stage;
 
-	// uintptr_t partitionInfoTableOffset = partitions.partitionInfoTableOffset << 2;
-	// DiscPartitionInfoTable partitionInfoTable;
-	// DI_UnencryptedRead(&partitionInfoTable, sizeof(DiscPartitionInfoTable), partitionInfoTableOffset);
+	DataStream stream(buf, size);
+	stage.LoadActors(stream);
 
-	// uintptr_t partitionOffset = partitionInfoTable.partitionOffset << 2;
-	// DiscPartition partition;
-	// DI_UnencryptedRead(&partition, sizeof(DiscPartition), partitionOffset);
+	stage.Initialize();
 
-	PrintFmt("%d\n", sizeof(DiscHeader));
-	auto buf = (char*)&header;
-	for (size_t i = 0; i < sizeof(DiscHeader); i++) {
-		char ch = buf[i];
-		if (ch == 0) {
-			continue;
+	while (true) {
+
+		WPAD_ScanPads();
+
+		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) {
+			exit(0);
 		}
-		PrintFmt("%c", ch);
+
+		if (WPAD_ButtonsDown(0)) {
+			stage.UseActorsOf(ButtonPressedAction);
+		}
+
+		#ifdef GFX_MODE
+
+		GX_SetViewport(0, 0, rMode->fbWidth, rMode->efbHeight, 0, 1);
+		GX_InvVtxCache();
+		GX_InvalidateTexAll();
+
+		GX_ClearVtxDesc();
+		GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
+		GX_SetVtxDesc(GX_VA_TEX0, GX_DIRECT);
+
+		guMtxIdentity(GXmodelView2D);
+		guMtxTransApply(GXmodelView2D, GXmodelView2D, 0.0F, 0.0F, -5.0F);
+		GX_LoadPosMtxImm(GXmodelView2D, GX_PNMTX0);
+
+		#endif
+
+		stage.UseActors(UpdateAction);
+		stage.UseActorsOf(DrawAction);
+
+		#ifdef GFX_MODE
+
+		GX_DrawDone();
+
+		GX_SetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
+		GX_SetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
+		GX_SetAlphaUpdate(GX_TRUE);
+		GX_SetColorUpdate(GX_TRUE);
+		GX_CopyDisp(frameBuffer[frameBuf], GX_TRUE);
+
+		VIDEO_SetNextFramebuffer(frameBuffer[frameBuf]);
+		if (firstFrame) {
+			VIDEO_SetBlack(FALSE);
+			firstFrame = 0;
+		}
+		VIDEO_Flush();
+		VIDEO_WaitVSync();
+		frameBuf ^= 1;		// flip framebuffer
+
+		#endif
+
+		#ifdef DEBUG_MODE
+		VIDEO_WaitVSync();
+		#endif
 	}
-	Print("");
-
-	Error("EndProgram");
-
-	// PrintFmt("%d\n", argCount);
-	
-	// Error("ErrrorLOop");
-
-	// if (access("./Stages/Stage1.stg", F_OK) != 0) {
-	// 	Error("Couldnt access file");
-	// }
-	// FILE* file = fopen("/Stages/Stage1.stg", "rb");
-
-	// fseek(file, 0L, SEEK_END);
-	// size_t size = ftell(file);
-	// rewind(file);
-	// char buf[size];
-	// fgets(buf, size, file);
-
-	// Stage stage;
-
-	// DataStream stream(buf, size);
-	// stage.LoadActors(stream);
-
-	// stage.Initialize();
-
-	// while (true) {
-
-		// WPAD_ScanPads();
-
-	// 	if (WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) {
-	// 		exit(0);
-	// 	}
-
-	// 	if (WPAD_ButtonsDown(0)) {
-	// 		stage.UseActorsOf(ButtonPressedAction);
-	// 	}
-
-	// 	#ifdef GFX_MODE
-
-	// 	GX_SetViewport(0, 0, rMode->fbWidth, rMode->efbHeight, 0, 1);
-	// 	GX_InvVtxCache();
-	// 	GX_InvalidateTexAll();
-
-	// 	GX_ClearVtxDesc();
-	// 	GX_SetVtxDesc(GX_VA_POS, GX_DIRECT);
-	// 	GX_SetVtxDesc(GX_VA_TEX0, GX_DIRECT);
-
-	// 	guMtxIdentity(GXmodelView2D);
-	// 	guMtxTransApply(GXmodelView2D, GXmodelView2D, 0.0F, 0.0F, -5.0F);
-	// 	GX_LoadPosMtxImm(GXmodelView2D, GX_PNMTX0);
-
-	// 	#endif
-
-	// 	stage.UseActors(UpdateAction);
-	// 	stage.UseActorsOf(DrawAction);
-
-	// 	#ifdef GFX_MODE
-
-	// 	GX_DrawDone();
-
-	// 	GX_SetZMode(GX_TRUE, GX_LEQUAL, GX_TRUE);
-	// 	GX_SetBlendMode(GX_BM_BLEND, GX_BL_SRCALPHA, GX_BL_INVSRCALPHA, GX_LO_CLEAR);
-	// 	GX_SetAlphaUpdate(GX_TRUE);
-	// 	GX_SetColorUpdate(GX_TRUE);
-	// 	GX_CopyDisp(frameBuffer[frameBuf], GX_TRUE);
-
-	// 	VIDEO_SetNextFramebuffer(frameBuffer[frameBuf]);
-	// 	if (firstFrame) {
-	// 		VIDEO_SetBlack(FALSE);
-	// 		firstFrame = 0;
-	// 	}
-	// 	VIDEO_Flush();
-	// 	VIDEO_WaitVSync();
-	// 	frameBuf ^= 1;		// flip framebuffer
-
-	// 	#endif
-
-	// 	#ifdef DEBUG_MODE
-	// 	VIDEO_WaitVSync();
-	// 	#endif
-	// }
 	return 0;
 }

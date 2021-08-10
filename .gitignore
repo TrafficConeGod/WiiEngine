@@ -1,8 +1,8 @@
 Build
-Image
+Data
+Media
 *.dol
 *.elf
 *.iso
-Stages/*.cpp
 *.json
 callgrind.*
