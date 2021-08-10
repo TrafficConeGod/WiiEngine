@@ -1,6 +1,7 @@
 Build
 Data
 Media
+App
 *.dol
 *.elf
 *.iso

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<app version="1">
+<name>Your App</name>
+<version>1</version>
+<release_date>20060101000000</release_date>
+<coder>You</coder>
+<short_description>Your Short Description</short_description>
+<long_description>
+Your Long Description
+</long_description>
+</app>
