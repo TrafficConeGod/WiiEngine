@@ -1,3 +1,4 @@
 BouncingBall,Position,"300, 300",Velocity,"1000, 1000"
 BouncingBallGenerator,,,,
 Character,Position,"100, 100",Image,0
+BouncingBall,Position,"400, 300",Velocity,"1000, 1000"

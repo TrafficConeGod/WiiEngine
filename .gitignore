@@ -5,4 +5,5 @@ Media
 *.elf
 *.iso
 *.json
+*.csv#
 callgrind.*
