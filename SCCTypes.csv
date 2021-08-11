@@ -2,5 +2,5 @@ Sprite,,Vector2Int Position,Actor Texture
 Character,Sprite,,
 BouncingBall,,Vector2Int Position,Vector2Int Velocity
 BouncingBallGenerator,,,
-Resource,,Path,
+Resource,,String Path,
 TextureResource,Resource,,
