@@ -9,5 +9,7 @@ class Resource : public virtual Actor {
         static const short ID = -2;
 
         using Actor::Actor;
+        virtual bool IsOfType(short id);
+        
         virtual void Load(DataStream& stream);
 };

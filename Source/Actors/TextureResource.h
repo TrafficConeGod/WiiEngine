@@ -6,5 +6,7 @@ class TextureResource : public virtual Resource {
         static const short ID = 6;
 
         using Resource::Resource;
+        virtual bool IsOfType(short id);
+
         virtual void Load(DataStream& stream);
 };
