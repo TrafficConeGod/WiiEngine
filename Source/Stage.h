@@ -18,9 +18,18 @@ class Stage {
 
         void Initialize();
         void Destroy();
+
         void UseActors(void (*action)(Actor*));
+        
+        template<typename A>
+        void UseActorsOf(void (*action)(A*));
+
         template<typename T>
-        void UseActorsOf(void (*action)(T*));
+        void UseActorsWith(const T& val, void (*func)(Actor*, T));
+
+        template<typename A, typename T>
+        void UseActorsOfWith(const T& val, void (*func)(A*, T));
+
 };
 
 #include "Stage.inl"

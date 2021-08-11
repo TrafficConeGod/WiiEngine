@@ -35,8 +35,8 @@ void DrawAction(Sprite* sprite) {
 	sprite->Draw();
 }
 
-void ButtonPressedAction(Inputtable* inputtable) {
-	inputtable->ButtonPressed(WPAD_ButtonsDown(0));
+void ButtonPressedAction(Inputtable* inputtable, uint buttonType) {
+	inputtable->ButtonPressed(buttonType);
 }
 
 void ListDir(const char* path) {
@@ -217,12 +217,14 @@ int main(int argCount, char** args) {
 
 		WPAD_ScanPads();
 
-		if (WPAD_ButtonsDown(0) & WPAD_BUTTON_HOME) {
+		uint buttonType = WPAD_ButtonsDown(0);
+
+		if (buttonType & WPAD_BUTTON_HOME) {
 			exit(0);
 		}
 
-		if (WPAD_ButtonsDown(0)) {
-			stage.UseActorsOf(ButtonPressedAction);
+		if (buttonType) {
+			stage.UseActorsOfWith(buttonType, ButtonPressedAction);
 		}
 
 		#ifdef GFX_MODE

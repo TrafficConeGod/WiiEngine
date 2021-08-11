@@ -26,8 +26,14 @@ class Actor {
 
         void Use(void (*func)(Actor*));
 
+        template<typename A>
+        void UseOf(void (*func)(A*));
+
         template<typename T>
-        void UseOf(void (*func)(T*));
+        void UseWith(const T& val, void (*func)(Actor*, T));
+
+        template<typename A, typename T>
+        void UseOfWith(const T& val, void (*func)(A*, T));
 
         void Initialize();
 
