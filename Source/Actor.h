@@ -7,6 +7,7 @@ class Stage;
 
 class Actor {
     protected:
+        size_t index;
         bool initialized = false;
         bool alive = false;
 

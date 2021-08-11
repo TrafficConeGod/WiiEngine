@@ -3,6 +3,8 @@
 #include "Wii/mem.h"
 #include "Wii/io.h"
 
+Actor::Actor(Stage* _stage) : stage{_stage}, index{_stage->GetCurrentIndex()} {}
+
 void Actor::Initialize() {
     if (!initialized) {
         initialized = true;
@@ -30,8 +32,6 @@ Actor* Actor::CreateChildFrom(DataStream& stream) {
     return actor;
 }
 
-Actor::Actor(Stage* _stage) : stage{_stage} {}
-
 bool Actor::IsOfType(ushort id) {
     return id == ID;
 }
@@ -44,6 +44,7 @@ void Actor::Create() {
 
 void Actor::Destroy() {
     alive = false;
+    stage->RemoveActor(index);
     for (size_t i = 0; i < children.size; i++) {
         Actor* child = children[i];
         child->Destroy();

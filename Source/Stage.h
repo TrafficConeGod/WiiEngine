@@ -10,7 +10,10 @@ class Stage {
     public:
         ~Stage();
 
+        size_t GetCurrentIndex();
+
         Actor* AllocateActor(ushort id);
+        void RemoveActor(size_t index);
 
         Actor* LoadActor(DataStream& stream);
         bool LoadActors(DataStream& stream);
@@ -29,7 +32,6 @@ class Stage {
 
         template<typename A, typename T>
         void UseActorsOfWith(const T& val, void (*func)(A*, T));
-
 };
 
 #include "Stage.inl"

@@ -24,6 +24,10 @@ Stage::~Stage() {
     }
 }
 
+size_t Stage::GetCurrentIndex() {
+    return actors.size;
+}
+
 Actor* Stage::AllocateActor(ushort id) {
     Actor* actor;
     switch (id) {
@@ -36,6 +40,10 @@ Actor* Stage::AllocateActor(ushort id) {
     }
     actors << actor;
     return actor;
+}
+
+void Stage::RemoveActor(size_t index) {
+    actors[index] = nullptr;
 }
 
 Actor* Stage::LoadActor(DataStream& stream) {
