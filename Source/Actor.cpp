@@ -5,6 +5,14 @@
 
 Actor::Actor(Stage* _stage) : stage{_stage}, index{_stage->GetCurrentIndex()} {}
 
+void DestroyAction(Actor* actor) {
+    actor->Destroy();
+}
+
+Actor::~Actor() {
+    Use(DestroyAction);
+}
+
 void Actor::Initialize() {
     if (!initialized) {
         initialized = true;

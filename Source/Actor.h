@@ -22,6 +22,7 @@ class Actor {
         static const uint ID = 0;
 
         Actor(Stage* stage);
+        ~Actor();
 
         virtual bool IsOfType(short id);
 

@@ -20,6 +20,6 @@ class String {
 
         ~String();
 
-        char* GetPtr();
-        const char* GetConstPtr();
+        operator char*();
+        operator const char*();
 };
