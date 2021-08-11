@@ -2,5 +2,7 @@ Actor,,,
 Sprite,Actor,Vector2Int Position,Int Image
 Inputtable,Actor,,
 Character,"Sprite, Inputtable",,
-BouncingBall,,Vector2Int Position,Vector2Int Velocity
-BouncingBallGenerator,,,
+BouncingBall,Actor,Vector2Int Position,Vector2Int Velocity
+BouncingBallGenerator,Actor,,
+Resource,Actor,Path,
+TextureResource,Resource,,

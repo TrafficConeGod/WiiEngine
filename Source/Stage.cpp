@@ -3,6 +3,7 @@
 #include "Actors/Character.h"
 #include "Actors/BouncingBallGenerator.h"
 #include "Wii/io.h"
+#include "Wii/file.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,7 +31,7 @@ Actor* Stage::AllocateActor(ushort id) {
         ActorCase(Character);
         ActorCase(BouncingBallGenerator);
         default:
-            Error("Invalid Actor ID");
+            Print("Invalid Actor ID");
             return nullptr;
     }
     actors << actor;
@@ -44,33 +45,29 @@ Actor* Stage::LoadActor(DataStream& stream) {
     PrintFmt("Loaded Actor ID: %d\n", id);
 
     auto actor = AllocateActor(id);
+    if (actor == nullptr) {
+        return nullptr;
+    }
     actor->Load(stream);
     return actor;
 }
 
-void Stage::LoadActors(DataStream& stream) {
+bool Stage::LoadActors(DataStream& stream) {
     while (stream.IsReadable()) {
-        LoadActor(stream);
+        if (LoadActor(stream) == nullptr) {
+            return false;
+        }
     }
+    return true;
+}
+
+bool LoadStageFromFileAction(void* buf, size_t size, Stage* stage) {
+    DataStream stream(buf, size);
+    return stage->LoadActors(stream);
 }
 
 bool Stage::LoadFromFile(const char* path) {
-    if (access(path, F_OK) != 0) {
-        Print("File not found");
-		return false;
-	}
-
-	FILE* file = fopen(path, "rb");
-
-	fseek(file, 0L, SEEK_END);
-	size_t size = ftell(file);
-	rewind(file);
-	char buf[size];
-	fgets(buf, size, file);
-
-	DataStream stream(buf, size);
-	LoadActors(stream);
-    return true;
+    return UseFileWith(path, this, LoadStageFromFileAction);
 }
 
 void Stage::Initialize() {

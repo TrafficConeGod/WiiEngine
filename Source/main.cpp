@@ -66,12 +66,6 @@ void ListDir(const char* path) {
 	}
 }
 
-TPLFile* tplFile;
-bool LoadTPL(void* buf, size_t size) {
-	TPL_OpenTPLFromMemory(tplFile, buf, size);
-	return true;
-}
-
 int main(int argCount, char** args) {
 
 
@@ -198,8 +192,7 @@ int main(int argCount, char** args) {
 	GX_InvalidateTexAll();
 
 	TPLFile spriteTPL;
-	tplFile = &spriteTPL;
-	UseFile("Data/Textures/ballsprites.tpl", LoadTPL);
+	TPL_OpenTPLFromMemory(&spriteTPL, (void*)textures_tpl, textures_tpl_size);
 	TPL_GetTexture(&spriteTPL, 0, &texObj);
 	GX_LoadTexObj(&texObj, GX_TEXMAP0);
 
@@ -215,7 +208,9 @@ int main(int argCount, char** args) {
 	Print("\n\n");
 
 	Stage stage;
-	stage.LoadFromFile("Data/Stages/Stage1.stg");
+	if (!stage.LoadFromFile("Data/Stages/Stage1.stg")) {
+		Error("Failed to load stage from file");
+	}
 	stage.Initialize();
 
 	while (true) {

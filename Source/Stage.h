@@ -13,7 +13,7 @@ class Stage {
         Actor* AllocateActor(ushort id);
 
         Actor* LoadActor(DataStream& stream);
-        void LoadActors(DataStream& stream);
+        bool LoadActors(DataStream& stream);
         bool LoadFromFile(const char* path);
 
         void Initialize();
