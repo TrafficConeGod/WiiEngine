@@ -56,3 +56,11 @@ String::String(DataStream& stream) {
 String::~String() {
     free(buf);
 }
+
+String::operator char*() {
+    return buf;
+}
+
+String::operator const char*() {
+    return (const char*)buf;
+}

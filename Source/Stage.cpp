@@ -2,6 +2,7 @@
 #include "Actors/BouncingBall.h"
 #include "Actors/Character.h"
 #include "Actors/BouncingBallGenerator.h"
+#include "Actors/TextureResource.h"
 #include "Wii/io.h"
 #include "Wii/file.h"
 
@@ -34,6 +35,7 @@ Actor* Stage::AllocateActor(short id) {
         ActorCase(BouncingBall);
         ActorCase(Character);
         ActorCase(BouncingBallGenerator);
+        ActorCase(TextureResource);
         default:
             Print("Invalid Actor ID");
             return nullptr;
@@ -85,7 +87,7 @@ void Stage::Initialize() {
     }
 }
 
-void DestroyAction(Actor* actor) {
+static void DestroyAction(Actor* actor) {
     actor->Destroy();
 }
 
