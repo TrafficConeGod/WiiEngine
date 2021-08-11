@@ -7,8 +7,8 @@ bool Sprite::IsOfType(short id) {
 
 void Sprite::Load(DataStream& stream) {
 	Actor::Load(stream);
-	// stream >> pos;
-	// stream >> image;
+	stream >> pos;
+	stream >> image;
 }
 
 float texCoords[] = {
