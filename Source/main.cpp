@@ -1,8 +1,6 @@
 #include "Wii/io.h"
-#ifdef GFX_MODE
 #include "../Build/textures_tpl.h"
 #include "../Build/textures.h"
-#endif
 #include "Stage.h"
 #include "Actors/Sprite.h"
 #include "Actors/Inputtable.h"
@@ -11,13 +9,7 @@
 
 #include <fat.h>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <dirent.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#include "Wii/file.h"
 
 #define DEFAULT_FIFO_SIZE (256*1024)
 
@@ -74,7 +66,59 @@ void ListDir(const char* path) {
 	}
 }
 
+TPLFile* tplFile;
+bool LoadTPL(void* buf, size_t size) {
+	TPL_OpenTPLFromMemory(tplFile, buf, size);
+	return true;
+}
+
 int main(int argCount, char** args) {
+
+
+	#ifdef DEBUG_MODE
+	// Initialise the video system
+	VIDEO_Init();
+
+	// This function initialises the attached controllers
+	WPAD_Init();
+
+	// Obtain the preferred video mode from the system
+	// This will correspond to the settings in the Wii menu
+	rMode = VIDEO_GetPreferredMode(NULL);
+
+	// Allocate memory for the display in the uncached region
+	xfb = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rMode));
+
+	// Initialise the console, required for printf
+	console_init(xfb,20,20,rMode->fbWidth,rMode->xfbHeight,rMode->fbWidth*VI_DISPLAY_PIX_SZ);
+
+	// Set up the video registers with the chosen mode
+	VIDEO_Configure(rMode);
+
+	// Tell the video hardware where our display memory is
+	VIDEO_SetNextFramebuffer(xfb);
+
+	// Make the display visible
+	VIDEO_SetBlack(FALSE);
+
+	// Flush the video register changes to the hardware
+	VIDEO_Flush();
+
+	// Wait for Video setup to complete
+	VIDEO_WaitVSync();
+	if(rMode->viTVMode&VI_NON_INTERLACE) VIDEO_WaitVSync();
+
+
+	// The console understands VT terminal escape codes
+	// This positions the cursor on row 2, column 0
+	// we can use variables for this with format codes too
+	// e.g. printf ("\x1b[%d;%dH", row, column );
+	PrintFmt("\x1b[2;0H");
+	#endif
+
+	if (!fatInitDefault()) {
+		Error("fatInitDefault() failed");
+	}
 	#ifdef GFX_MODE
 
 	u32	frameBuf; 	// initial framebuffer index
@@ -154,8 +198,9 @@ int main(int argCount, char** args) {
 	GX_InvalidateTexAll();
 
 	TPLFile spriteTPL;
-	TPL_OpenTPLFromMemory(&spriteTPL, (void*)textures_tpl, textures_tpl_size);
-	TPL_GetTexture(&spriteTPL, ballsprites, &texObj);
+	tplFile = &spriteTPL;
+	UseFile("Data/Textures/ballsprites.tpl", LoadTPL);
+	TPL_GetTexture(&spriteTPL, 0, &texObj);
 	GX_LoadTexObj(&texObj, GX_TEXMAP0);
 
 	guOrtho(perspective, 0, 479, 0, 639, 0, 300);
@@ -167,50 +212,7 @@ int main(int argCount, char** args) {
 
 	#endif
 
-	#ifdef DEBUG_MODE
-	// Initialise the video system
-	VIDEO_Init();
-
-	// This function initialises the attached controllers
-	WPAD_Init();
-
-	// Obtain the preferred video mode from the system
-	// This will correspond to the settings in the Wii menu
-	rMode = VIDEO_GetPreferredMode(NULL);
-
-	// Allocate memory for the display in the uncached region
-	xfb = MEM_K0_TO_K1(SYS_AllocateFramebuffer(rMode));
-
-	// Initialise the console, required for printf
-	console_init(xfb,20,20,rMode->fbWidth,rMode->xfbHeight,rMode->fbWidth*VI_DISPLAY_PIX_SZ);
-
-	// Set up the video registers with the chosen mode
-	VIDEO_Configure(rMode);
-
-	// Tell the video hardware where our display memory is
-	VIDEO_SetNextFramebuffer(xfb);
-
-	// Make the display visible
-	VIDEO_SetBlack(FALSE);
-
-	// Flush the video register changes to the hardware
-	VIDEO_Flush();
-
-	// Wait for Video setup to complete
-	VIDEO_WaitVSync();
-	if(rMode->viTVMode&VI_NON_INTERLACE) VIDEO_WaitVSync();
-
-
-	// The console understands VT terminal escape codes
-	// This positions the cursor on row 2, column 0
-	// we can use variables for this with format codes too
-	// e.g. printf ("\x1b[%d;%dH", row, column );
-	PrintFmt("\x1b[2;0H");
-	#endif
-
-	if (!fatInitDefault()) {
-		Error("fatInitDefault() failed");
-	}
+	Print("\n\n");
 
 	Stage stage;
 	stage.LoadFromFile("Data/Stages/Stage1.stg");
