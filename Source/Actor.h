@@ -19,7 +19,7 @@ class Actor {
 
         virtual void Create();
     public:
-        static const uint ID = 1;
+        static const uint ID = 0;
 
         Actor(Stage* stage);
 

@@ -4,7 +4,7 @@
 
 class BouncingBall : public virtual Sprite {
     public:
-        static const short ID = 5;
+        static const short ID = 3;
 
         Vector2i vel;
 
