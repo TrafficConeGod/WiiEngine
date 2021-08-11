@@ -12,7 +12,7 @@ class Stage {
 
         size_t GetCurrentIndex();
 
-        Actor* AllocateActor(ushort id);
+        Actor* AllocateActor(short id);
         void RemoveActor(size_t index);
 
         Actor* LoadActor(DataStream& stream);

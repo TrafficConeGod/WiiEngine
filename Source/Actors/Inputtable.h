@@ -3,10 +3,10 @@
 
 class Inputtable : public virtual Actor {
     public:
-        static const ushort ID = 3;
+        static const short ID = 3;
 
         using Actor::Actor;
-        virtual bool IsOfType(ushort id);
+        virtual bool IsOfType(short id);
 
         virtual void ButtonPressed(uint buttonType);
         virtual void ButtonReleased();

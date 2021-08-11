@@ -28,7 +28,7 @@ size_t Stage::GetCurrentIndex() {
     return actors.size;
 }
 
-Actor* Stage::AllocateActor(ushort id) {
+Actor* Stage::AllocateActor(short id) {
     Actor* actor;
     switch (id) {
         ActorCase(BouncingBall);
@@ -47,7 +47,7 @@ void Stage::RemoveActor(size_t index) {
 }
 
 Actor* Stage::LoadActor(DataStream& stream) {
-    ushort id = 0;
+    short id = 0;
     stream >> id;
 
     PrintFmt("Loaded Actor ID: %d\n", id);

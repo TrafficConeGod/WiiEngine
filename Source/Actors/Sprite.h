@@ -4,13 +4,13 @@
 
 class Sprite : public virtual Actor {
     public:
-        static const ushort ID = 2;
+        static const short ID = 2;
 
         Vector2i pos;
         int image;
 
         using Actor::Actor;
-        virtual bool IsOfType(ushort id);
+        virtual bool IsOfType(short id);
         
         virtual void Load(DataStream& stream);
 

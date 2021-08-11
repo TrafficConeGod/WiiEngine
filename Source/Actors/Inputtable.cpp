@@ -1,6 +1,6 @@
 #include "Inputtable.h"
 
-bool Inputtable::IsOfType(ushort id) {
+bool Inputtable::IsOfType(short id) {
     return id == ID || Actor::IsOfType(id);
 }
 

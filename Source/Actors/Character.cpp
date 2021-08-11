@@ -2,7 +2,7 @@
 
 Character::Character(Stage* _stage) : Sprite(_stage), Inputtable(_stage), Actor(_stage) {}
 
-bool Character::IsOfType(ushort id) {
+bool Character::IsOfType(short id) {
     return id == ID || Sprite::IsOfType(id) || Inputtable::IsOfType(id);
 }
 

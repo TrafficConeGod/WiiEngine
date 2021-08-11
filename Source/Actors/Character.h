@@ -4,10 +4,10 @@
 
 class Character : public virtual Sprite, public virtual Inputtable {
     public:
-        static const ushort ID = 4;
+        static const short ID = 4;
 
         Character(Stage* stage);
-        virtual bool IsOfType(ushort id);
+        virtual bool IsOfType(short id);
 
         virtual void Create();
         virtual void ButtonPressed(uint buttonType);

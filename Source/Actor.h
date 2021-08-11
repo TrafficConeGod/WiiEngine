@@ -14,7 +14,7 @@ class Actor {
         Stage* stage;
         Array<Actor*> children;
 
-        Actor* CreateChild(ushort id);
+        Actor* CreateChild(short id);
         Actor* CreateChildFrom(DataStream& stream);
 
         virtual void Create();
@@ -23,7 +23,7 @@ class Actor {
 
         Actor(Stage* stage);
 
-        virtual bool IsOfType(ushort id);
+        virtual bool IsOfType(short id);
 
         void Use(void (*func)(Actor*));
 

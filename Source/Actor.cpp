@@ -18,7 +18,7 @@ void Actor::Use(void (*func)(Actor*)) {
     }
 }
 
-Actor* Actor::CreateChild(ushort id) {
+Actor* Actor::CreateChild(short id) {
     Actor* actor = stage->AllocateActor(id);
     actor->Initialize();
     children << actor;
@@ -32,7 +32,7 @@ Actor* Actor::CreateChildFrom(DataStream& stream) {
     return actor;
 }
 
-bool Actor::IsOfType(ushort id) {
+bool Actor::IsOfType(short id) {
     return id == ID;
 }
 

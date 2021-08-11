@@ -1,6 +1,6 @@
 #include "BouncingBall.h"
 
-bool BouncingBall::IsOfType(ushort id) {
+bool BouncingBall::IsOfType(short id) {
     return id == ID || Sprite::IsOfType(id);
 }
 
