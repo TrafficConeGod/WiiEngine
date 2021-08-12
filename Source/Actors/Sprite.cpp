@@ -8,7 +8,7 @@ bool Sprite::IsOfType(short id) {
 void Sprite::Load(DataStream& stream) {
 	Actor::Load(stream);
 	stream >> pos;
-	stream >> image;
+	textureRef.Load(stage, stream);
 }
 
 float texCoords[] = {
@@ -25,7 +25,7 @@ void Sprite::Draw() {
 	int x = pos.x >> 8;
 	int y = pos.y >> 8;
 
-	int texIndex = image * 8;
+	int texIndex = 0 * 8;
 
 	GX_Begin(GX_QUADS, GX_VTXFMT0, 4);			// Draw A Quad
 	GX_Position2f32(x, y);					// Top Left

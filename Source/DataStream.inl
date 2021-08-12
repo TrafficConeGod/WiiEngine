@@ -6,6 +6,7 @@ T* DataStream::PtrAtPos() {
     if (pos + sizeof(T) > size) {
         Error("Attempt to index out of DataStream bounds");
     }
+    PrintFmt("Reading 0x%x bytes from offset 0x%x\n", sizeof(T), pos);
     return (T*)((intptr_t)buf + pos);
 }
 

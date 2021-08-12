@@ -44,6 +44,13 @@ Actor* Stage::AllocateActor(short id) {
     return actor;
 }
 
+Actor* Stage::GetActorAtIndex(size_t index) {
+    if (index >= actors.size) {
+        return nullptr;
+    }
+    return actors[index];
+}
+
 void Stage::RemoveActor(size_t index) {
     actors[index] = nullptr;
 }

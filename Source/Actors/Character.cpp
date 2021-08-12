@@ -9,7 +9,6 @@ bool Character::IsOfType(short id) {
 void Character::Create() {
     Inputtable::Create();
     pos = Vector2i(10000, 10000);
-	image = 0;
 }
 
 void Character::ButtonPressed(uint buttonType) {

@@ -5,14 +5,13 @@ bool BouncingBall::IsOfType(short id) {
 }
 
 void BouncingBall::Load(DataStream& stream) {
-    stream >> pos;
+	Sprite::Load(stream);
 	stream >> vel;
 }
 
 void BouncingBall::Create() {
 	PrintFmt("Bouncing ball load%d\n", rand());
 	Sprite::Create();
-	image = rand() & 3;
 
 	if (rand() & 1) {
 		vel.x = -vel.x;

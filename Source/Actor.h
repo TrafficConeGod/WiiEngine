@@ -7,11 +7,9 @@ class Stage;
 
 class Actor {
     protected:
-        size_t index;
         bool initialized = false;
         bool alive = false;
 
-        Stage* stage;
         Array<Actor*> children;
 
         Actor* CreateChild(short id);
@@ -20,6 +18,9 @@ class Actor {
         virtual void Create();
     public:
         static const uint ID = 0;
+        
+        size_t index;
+        Stage* stage;
 
         Actor(Stage* stage);
         ~Actor();
