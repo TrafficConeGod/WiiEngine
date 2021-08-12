@@ -1,2 +1,6 @@
-rm Data/Stages/Stage1.stg
-scc SCCTypes.csv StageSource/Stage1.csv Data/Stages/Stage1.stg
+cd Stages
+for file in *
+do
+    name="${file%.*}"
+    scc ../SCCTypes.csv "$file" ../Data/Stages/"$name".stg
+done
