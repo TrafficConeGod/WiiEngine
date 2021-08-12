@@ -10,15 +10,8 @@ void BouncingBall::Load(DataStream& stream) {
 }
 
 void BouncingBall::Create() {
-	PrintFmt("Bouncing ball load%d\n", rand());
 	Sprite::Create();
-
-	if (rand() & 1) {
-		vel.x = -vel.x;
-    }
-	if (rand() & 1) {
-		vel.y = -vel.y;
-    }
+	PrintFmt("Bouncing ball create %d\n", rand());
 }
 
 void BouncingBall::Update() {
