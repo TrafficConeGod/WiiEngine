@@ -15,7 +15,8 @@ bool UseFileWith(const char* path, const T& val, bool (*func)(void*, size_t, T))
 
 	size_t size = fileStat.st_size;
 	char buf[size];
-	fgets(buf, size + 1, file);
+	fread(buf, 1, size, file);
+	fclose(file);
     if (!func(buf, size, val)) {
 		Print("Error in using file");
 		return false;
