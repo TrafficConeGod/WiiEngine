@@ -24,7 +24,7 @@ TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	Build
 SOURCES		:=	Source Source/Actors Source/Wii
 DATA		:=  
-TEXTURES	:=	Textures
+TEXTURES	:=	
 INCLUDES	:=  Source
 
 #---------------------------------------------------------------------------------

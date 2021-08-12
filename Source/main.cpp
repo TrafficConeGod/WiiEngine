@@ -1,6 +1,4 @@
 #include "Wii/io.h"
-#include "../Build/textures_tpl.h"
-#include "../Build/textures.h"
 #include "Stage.h"
 #include "Actors/Sprite.h"
 #include "Actors/Inputtable.h"
@@ -188,13 +186,7 @@ int main(int argCount, char** args) {
 	GX_SetTevOrder(GX_TEVSTAGE0, GX_TEXCOORD0, GX_TEXMAP0, GX_COLOR0A0);
 	GX_SetTexCoordGen(GX_TEXCOORD0, GX_TG_MTX2x4, GX_TG_TEX0, GX_IDENTITY);
 
-
 	GX_InvalidateTexAll();
-
-	TPLFile spriteTPL;
-	TPL_OpenTPLFromMemory(&spriteTPL, (void*)textures_tpl, textures_tpl_size);
-	TPL_GetTexture(&spriteTPL, 0, &texObj);
-	GX_LoadTexObj(&texObj, GX_TEXMAP0);
 
 	guOrtho(perspective, 0, 479, 0, 639, 0, 300);
 	GX_LoadProjectionMtx(perspective, GX_ORTHOGRAPHIC);

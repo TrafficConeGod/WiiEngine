@@ -1,5 +1,6 @@
 TextureResource: BallSpriteTexture,Path,Data/Textures/ballsprites.tpl,,,,
-Character,Position,"100, 100",Texture,BallSpriteTexture,,
-BouncingBall,Position,"400, 400",Velocity,"1000, 1000",Texture,BallSpriteTexture
+TextureResource: BallsTexture,Path,Data/Textures/balls.tpl,,,,
+Character,Position,"100, 100",Texture,BallsTexture,,
+BouncingBall,Position,"400, 400",Velocity,"1000, 1000",Texture,BallsTexture
 BouncingBall,Position,"400, 300",Velocity,"800, 800",Texture,BallSpriteTexture
 BouncingBallGenerator,,,,,,

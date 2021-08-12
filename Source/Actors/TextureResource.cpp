@@ -6,5 +6,13 @@ bool TextureResource::IsOfType(short id) {
 
 void TextureResource::Load(DataStream& stream) {
     Resource::Load(stream);
-    Print(path);
+    TPLFile tplFile;
+	TPL_OpenTPLFromFile(&tplFile, path);
+	TPL_GetTexture(&tplFile, 0, &texObj);
+}
+
+void TextureResource::UseTexture() {
+    #ifdef GFX_MODE
+	GX_LoadTexObj(&texObj, GX_TEXMAP0);
+    #endif
 }
