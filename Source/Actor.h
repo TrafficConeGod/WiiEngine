@@ -14,6 +14,7 @@ class Actor {
 
         Actor* CreateChild(short id);
         Actor* CreateChildFrom(DataStream& stream);
+        void MakeChild(Actor* actor);
 
         virtual void Create();
     public:

@@ -40,6 +40,10 @@ Actor* Actor::CreateChildFrom(DataStream& stream) {
     return actor;
 }
 
+void Actor::MakeChild(Actor* actor) {
+    children << actor;
+}
+
 bool Actor::IsOfType(short id) {
     return id == ID;
 }
