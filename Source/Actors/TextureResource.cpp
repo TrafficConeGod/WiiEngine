@@ -1,4 +1,5 @@
 #include "TextureResource.h"
+// #include "../Build/BasicTexture_tpl.h"
 
 TextureResource* currentTexture = nullptr;
 
@@ -9,6 +10,7 @@ bool TextureResource::IsOfType(short id) {
 void TextureResource::Load(DataStream& stream) {
     Resource::Load(stream);
     TPLFile tplFile;
+	// TPL_OpenTPLFromMemory(&tplFile, (void*)BasicTexture_tpl, BasicTexture_tpl_size);
 	TPL_OpenTPLFromFile(&tplFile, path);
 	TPL_GetTexture(&tplFile, 0, &texObj);
 }
