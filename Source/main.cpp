@@ -37,33 +37,6 @@ void ButtonPressedAction(Inputtable* inputtable, uint buttonType) {
 	inputtable->ButtonPressed(buttonType);
 }
 
-void ListDir(const char* path) {
-	DIR* dir = opendir(path);
-	if (!dir) {
-		Print("No Directory");
-		return;
-	}
-
-	PrintFmt("Listing: %s\n", path);
-
-	struct dirent* entry;
-
-	while ((entry = readdir(dir)) != NULL) {
-		if (entry->d_name[0] == '.' && (entry->d_name[1] == '\0' || (entry->d_name[1] == '.' && entry->d_name[2] == '\0'))) {
-			continue;
-		}
-		
-		struct stat entryStat;
-		stat(entry->d_name, &entryStat);
-
-		if (S_ISDIR(entryStat.st_mode)) {
-			PrintFmt("Directory: %s\n", entry->d_name);
-		} else {
-			PrintFmt("File: %s\n", entry->d_name);
-		}
-	}
-}
-
 int main(int argCount, char** args) {
 
 

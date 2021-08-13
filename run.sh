@@ -1,1 +1,1 @@
-dolphin-emu -e WiiEngine.dol
+dolphin-emu-nogui -e WiiEngine.dol
