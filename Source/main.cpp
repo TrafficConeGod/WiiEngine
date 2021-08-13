@@ -2,8 +2,6 @@
 #include "Stage.h"
 #include "Actors/Sprite.h"
 #include "Actors/Inputtable.h"
-#include "Actors/BouncingBall.h"
-#include "Actors/Character.h"
 
 #include <fat.h>
 
@@ -33,8 +31,16 @@ void DrawAction(Sprite* sprite) {
 	sprite->Draw();
 }
 
-void ButtonPressedAction(Inputtable* inputtable, uint buttonType) {
-	inputtable->ButtonPressed(buttonType);
+void ButtonsDownAction(Inputtable* inputtable, uint buttons) {
+	inputtable->ButtonsDown(buttons);
+}
+
+void ButtonsHeldAction(Inputtable* inputtable, uint buttons) {
+	inputtable->ButtonsHeld(buttons);
+}
+
+void ButtonsUpAction(Inputtable* inputtable, uint buttons) {
+	inputtable->ButtonsUp(buttons);
 }
 
 int main(int argCount, char** args) {
@@ -182,14 +188,24 @@ int main(int argCount, char** args) {
 
 		WPAD_ScanPads();
 
-		uint buttonType = WPAD_ButtonsDown(0);
+		uint buttonsDown = WPAD_ButtonsDown(0);
 
-		if (buttonType & WPAD_BUTTON_HOME) {
+		if (buttonsDown & WPAD_BUTTON_HOME) {
 			exit(0);
 		}
 
-		if (buttonType) {
-			stage.UseActorsOfWith(buttonType, ButtonPressedAction);
+		if (buttonsDown) {
+			stage.UseActorsOfWith(buttonsDown, ButtonsDownAction);
+		}
+
+		uint buttonsHeld = WPAD_ButtonsHeld(0);
+		if (buttonsHeld) {
+			stage.UseActorsOfWith(buttonsHeld, ButtonsHeldAction);
+		}
+
+		uint buttonsUp = WPAD_ButtonsUp(0);
+		if (buttonsUp) {
+			stage.UseActorsOfWith(buttonsUp, ButtonsUpAction);
 		}
 
 		#ifdef GFX_MODE

@@ -5,7 +5,7 @@ class TextureResource : public virtual Resource {
     private:
         GXTexObj texObj;
     public:
-        static const short ID = 6;
+        static const short ID = 3;
 
         using Resource::Resource;
         virtual bool IsOfType(short id);

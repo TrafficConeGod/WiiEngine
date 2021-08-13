@@ -4,6 +4,6 @@ bool Inputtable::IsOfType(short id) {
     return id == ID || Actor::IsOfType(id);
 }
 
-void Inputtable::ButtonPressed(uint) {}
-
-void Inputtable::ButtonReleased() {}
+void Inputtable::ButtonsDown(uint) {}
+void Inputtable::ButtonsHeld(uint) {}
+void Inputtable::ButtonsUp(uint) {}

@@ -20,10 +20,10 @@ float texCoords[] = {
 
 void Sprite::Draw() {
 	#ifdef GFX_MODE
-	if (textureRef.IsEmpty()) {
+	TextureResource* texture = textureRef;
+	if (texture == nullptr) {
 		return;
 	}
-	TextureResource* texture = textureRef;
 	texture->UseTexture();
 	const int width = 32;
 	const int height = 32;

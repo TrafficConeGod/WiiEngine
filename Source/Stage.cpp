@@ -1,18 +1,8 @@
 #include "Stage.h"
-#include "Actors/BouncingBall.h"
-#include "Actors/Character.h"
-#include "Actors/BouncingBallGenerator.h"
 #include "Actors/TextureResource.h"
+#include "Actors/Sprite.h"
 #include "Wii/io.h"
 #include "Wii/file.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <dirent.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
 
 #define ActorCase(T) case T::ID: \
 actor = dynamic_cast<Actor*>(new T(this)); \
@@ -32,9 +22,7 @@ size_t Stage::GetCurrentIndex() {
 Actor* Stage::AllocateActor(short id) {
     Actor* actor;
     switch (id) {
-        ActorCase(BouncingBall);
-        ActorCase(Character);
-        ActorCase(BouncingBallGenerator);
+        ActorCase(Sprite);
         ActorCase(TextureResource);
         default:
             Print("Invalid Actor ID");
