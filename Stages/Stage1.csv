@@ -1,2 +1,2 @@
-TextureResource: BasicTexture,Path,Data/Textures/BasicTexture.tpl,,
-Sprite,Position,"1000, 1000",Texture,BasicTexture
+TextureResource: BasicTexture,Path,Data/Textures/BasicTexture.tpl,,,,
+Sprite,Position,"200, 200",Size,"32, 32",Texture,BasicTexture

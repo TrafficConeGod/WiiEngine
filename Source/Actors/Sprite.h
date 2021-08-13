@@ -9,6 +9,7 @@ class Sprite : public virtual Actor {
         static const short ID = 1;
 
         Vector2i pos;
+        Vector2i size;
         ActorReference<TextureResource> textureRef;
 
         using Actor::Actor;
